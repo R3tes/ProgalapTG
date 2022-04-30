@@ -86,14 +86,14 @@ rebuild_cache/fast: rebuild_cache
 
 # The main all target
 all: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start E:\ProgalapTGProjekt\cmake-build-debug\CMakeFiles E:\ProgalapTGProjekt\cmake-build-debug\\CMakeFiles\progress.marks
-	$(MAKE) $(MAKESILENT) -f CMakeFiles\Makefile2 all
+	cd /d E:\ProgalapTGProjekt\cmake-build-debug && $(CMAKE_COMMAND) -E cmake_progress_start E:\ProgalapTGProjekt\cmake-build-debug\CMakeFiles E:\ProgalapTGProjekt\cmake-build-debug\main\\CMakeFiles\progress.marks
+	cd /d E:\ProgalapTGProjekt\cmake-build-debug && $(MAKE) $(MAKESILENT) -f CMakeFiles\Makefile2 main/all
 	$(CMAKE_COMMAND) -E cmake_progress_start E:\ProgalapTGProjekt\cmake-build-debug\CMakeFiles 0
 .PHONY : all
 
 # The main clean target
 clean:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles\Makefile2 clean
+	cd /d E:\ProgalapTGProjekt\cmake-build-debug && $(MAKE) $(MAKESILENT) -f CMakeFiles\Makefile2 main/clean
 .PHONY : clean
 
 # The main clean target
@@ -102,44 +102,56 @@ clean/fast: clean
 
 # Prepare targets for installation.
 preinstall: all
-	$(MAKE) $(MAKESILENT) -f CMakeFiles\Makefile2 preinstall
+	cd /d E:\ProgalapTGProjekt\cmake-build-debug && $(MAKE) $(MAKESILENT) -f CMakeFiles\Makefile2 main/preinstall
 .PHONY : preinstall
 
 # Prepare targets for installation.
 preinstall/fast:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles\Makefile2 preinstall
+	cd /d E:\ProgalapTGProjekt\cmake-build-debug && $(MAKE) $(MAKESILENT) -f CMakeFiles\Makefile2 main/preinstall
 .PHONY : preinstall/fast
 
 # clear depends
 depend:
-	$(CMAKE_COMMAND) -S$(CMAKE_SOURCE_DIR) -B$(CMAKE_BINARY_DIR) --check-build-system CMakeFiles\Makefile.cmake 1
+	cd /d E:\ProgalapTGProjekt\cmake-build-debug && $(CMAKE_COMMAND) -S$(CMAKE_SOURCE_DIR) -B$(CMAKE_BINARY_DIR) --check-build-system CMakeFiles\Makefile.cmake 1
 .PHONY : depend
 
-#=============================================================================
-# Target rules for targets named sakk
+# Convenience name for target.
+main/CMakeFiles/main.dir/rule:
+	cd /d E:\ProgalapTGProjekt\cmake-build-debug && $(MAKE) $(MAKESILENT) -f CMakeFiles\Makefile2 main/CMakeFiles/main.dir/rule
+.PHONY : main/CMakeFiles/main.dir/rule
 
-# Build rule for target.
-sakk: cmake_check_build_system
-	$(MAKE) $(MAKESILENT) -f CMakeFiles\Makefile2 sakk
-.PHONY : sakk
-
-# fast build rule for target.
-sakk/fast:
-	$(MAKE) $(MAKESILENT) -f libsakk\CMakeFiles\sakk.dir\build.make libsakk/CMakeFiles/sakk.dir/build
-.PHONY : sakk/fast
-
-#=============================================================================
-# Target rules for targets named main
-
-# Build rule for target.
-main: cmake_check_build_system
-	$(MAKE) $(MAKESILENT) -f CMakeFiles\Makefile2 main
+# Convenience name for target.
+main: main/CMakeFiles/main.dir/rule
 .PHONY : main
 
 # fast build rule for target.
 main/fast:
-	$(MAKE) $(MAKESILENT) -f main\CMakeFiles\main.dir\build.make main/CMakeFiles/main.dir/build
+	cd /d E:\ProgalapTGProjekt\cmake-build-debug && $(MAKE) $(MAKESILENT) -f main\CMakeFiles\main.dir\build.make main/CMakeFiles/main.dir/build
 .PHONY : main/fast
+
+main.obj: main.c.obj
+.PHONY : main.obj
+
+# target to build an object file
+main.c.obj:
+	cd /d E:\ProgalapTGProjekt\cmake-build-debug && $(MAKE) $(MAKESILENT) -f main\CMakeFiles\main.dir\build.make main/CMakeFiles/main.dir/main.c.obj
+.PHONY : main.c.obj
+
+main.i: main.c.i
+.PHONY : main.i
+
+# target to preprocess a source file
+main.c.i:
+	cd /d E:\ProgalapTGProjekt\cmake-build-debug && $(MAKE) $(MAKESILENT) -f main\CMakeFiles\main.dir\build.make main/CMakeFiles/main.dir/main.c.i
+.PHONY : main.c.i
+
+main.s: main.c.s
+.PHONY : main.s
+
+# target to generate assembly for a file
+main.c.s:
+	cd /d E:\ProgalapTGProjekt\cmake-build-debug && $(MAKE) $(MAKESILENT) -f main\CMakeFiles\main.dir\build.make main/CMakeFiles/main.dir/main.c.s
+.PHONY : main.c.s
 
 # Help Target
 help:
@@ -150,7 +162,9 @@ help:
 	@echo ... edit_cache
 	@echo ... rebuild_cache
 	@echo ... main
-	@echo ... sakk
+	@echo ... main.obj
+	@echo ... main.i
+	@echo ... main.s
 .PHONY : help
 
 
@@ -162,6 +176,6 @@ help:
 # No rule that depends on this can have commands that come from listfiles
 # because they might be regenerated.
 cmake_check_build_system:
-	$(CMAKE_COMMAND) -S$(CMAKE_SOURCE_DIR) -B$(CMAKE_BINARY_DIR) --check-build-system CMakeFiles\Makefile.cmake 0
+	cd /d E:\ProgalapTGProjekt\cmake-build-debug && $(CMAKE_COMMAND) -S$(CMAKE_SOURCE_DIR) -B$(CMAKE_BINARY_DIR) --check-build-system CMakeFiles\Makefile.cmake 0
 .PHONY : cmake_check_build_system
 

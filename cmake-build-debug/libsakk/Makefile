@@ -86,14 +86,14 @@ rebuild_cache/fast: rebuild_cache
 
 # The main all target
 all: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start E:\ProgalapTGProjekt\cmake-build-debug\CMakeFiles E:\ProgalapTGProjekt\cmake-build-debug\\CMakeFiles\progress.marks
-	$(MAKE) $(MAKESILENT) -f CMakeFiles\Makefile2 all
+	cd /d E:\ProgalapTGProjekt\cmake-build-debug && $(CMAKE_COMMAND) -E cmake_progress_start E:\ProgalapTGProjekt\cmake-build-debug\CMakeFiles E:\ProgalapTGProjekt\cmake-build-debug\libsakk\\CMakeFiles\progress.marks
+	cd /d E:\ProgalapTGProjekt\cmake-build-debug && $(MAKE) $(MAKESILENT) -f CMakeFiles\Makefile2 libsakk/all
 	$(CMAKE_COMMAND) -E cmake_progress_start E:\ProgalapTGProjekt\cmake-build-debug\CMakeFiles 0
 .PHONY : all
 
 # The main clean target
 clean:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles\Makefile2 clean
+	cd /d E:\ProgalapTGProjekt\cmake-build-debug && $(MAKE) $(MAKESILENT) -f CMakeFiles\Makefile2 libsakk/clean
 .PHONY : clean
 
 # The main clean target
@@ -102,44 +102,56 @@ clean/fast: clean
 
 # Prepare targets for installation.
 preinstall: all
-	$(MAKE) $(MAKESILENT) -f CMakeFiles\Makefile2 preinstall
+	cd /d E:\ProgalapTGProjekt\cmake-build-debug && $(MAKE) $(MAKESILENT) -f CMakeFiles\Makefile2 libsakk/preinstall
 .PHONY : preinstall
 
 # Prepare targets for installation.
 preinstall/fast:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles\Makefile2 preinstall
+	cd /d E:\ProgalapTGProjekt\cmake-build-debug && $(MAKE) $(MAKESILENT) -f CMakeFiles\Makefile2 libsakk/preinstall
 .PHONY : preinstall/fast
 
 # clear depends
 depend:
-	$(CMAKE_COMMAND) -S$(CMAKE_SOURCE_DIR) -B$(CMAKE_BINARY_DIR) --check-build-system CMakeFiles\Makefile.cmake 1
+	cd /d E:\ProgalapTGProjekt\cmake-build-debug && $(CMAKE_COMMAND) -S$(CMAKE_SOURCE_DIR) -B$(CMAKE_BINARY_DIR) --check-build-system CMakeFiles\Makefile.cmake 1
 .PHONY : depend
 
-#=============================================================================
-# Target rules for targets named sakk
+# Convenience name for target.
+libsakk/CMakeFiles/sakk.dir/rule:
+	cd /d E:\ProgalapTGProjekt\cmake-build-debug && $(MAKE) $(MAKESILENT) -f CMakeFiles\Makefile2 libsakk/CMakeFiles/sakk.dir/rule
+.PHONY : libsakk/CMakeFiles/sakk.dir/rule
 
-# Build rule for target.
-sakk: cmake_check_build_system
-	$(MAKE) $(MAKESILENT) -f CMakeFiles\Makefile2 sakk
+# Convenience name for target.
+sakk: libsakk/CMakeFiles/sakk.dir/rule
 .PHONY : sakk
 
 # fast build rule for target.
 sakk/fast:
-	$(MAKE) $(MAKESILENT) -f libsakk\CMakeFiles\sakk.dir\build.make libsakk/CMakeFiles/sakk.dir/build
+	cd /d E:\ProgalapTGProjekt\cmake-build-debug && $(MAKE) $(MAKESILENT) -f libsakk\CMakeFiles\sakk.dir\build.make libsakk/CMakeFiles/sakk.dir/build
 .PHONY : sakk/fast
 
-#=============================================================================
-# Target rules for targets named main
+sakk.obj: sakk.c.obj
+.PHONY : sakk.obj
 
-# Build rule for target.
-main: cmake_check_build_system
-	$(MAKE) $(MAKESILENT) -f CMakeFiles\Makefile2 main
-.PHONY : main
+# target to build an object file
+sakk.c.obj:
+	cd /d E:\ProgalapTGProjekt\cmake-build-debug && $(MAKE) $(MAKESILENT) -f libsakk\CMakeFiles\sakk.dir\build.make libsakk/CMakeFiles/sakk.dir/sakk.c.obj
+.PHONY : sakk.c.obj
 
-# fast build rule for target.
-main/fast:
-	$(MAKE) $(MAKESILENT) -f main\CMakeFiles\main.dir\build.make main/CMakeFiles/main.dir/build
-.PHONY : main/fast
+sakk.i: sakk.c.i
+.PHONY : sakk.i
+
+# target to preprocess a source file
+sakk.c.i:
+	cd /d E:\ProgalapTGProjekt\cmake-build-debug && $(MAKE) $(MAKESILENT) -f libsakk\CMakeFiles\sakk.dir\build.make libsakk/CMakeFiles/sakk.dir/sakk.c.i
+.PHONY : sakk.c.i
+
+sakk.s: sakk.c.s
+.PHONY : sakk.s
+
+# target to generate assembly for a file
+sakk.c.s:
+	cd /d E:\ProgalapTGProjekt\cmake-build-debug && $(MAKE) $(MAKESILENT) -f libsakk\CMakeFiles\sakk.dir\build.make libsakk/CMakeFiles/sakk.dir/sakk.c.s
+.PHONY : sakk.c.s
 
 # Help Target
 help:
@@ -149,8 +161,10 @@ help:
 	@echo ... depend
 	@echo ... edit_cache
 	@echo ... rebuild_cache
-	@echo ... main
 	@echo ... sakk
+	@echo ... sakk.obj
+	@echo ... sakk.i
+	@echo ... sakk.s
 .PHONY : help
 
 
@@ -162,6 +176,6 @@ help:
 # No rule that depends on this can have commands that come from listfiles
 # because they might be regenerated.
 cmake_check_build_system:
-	$(CMAKE_COMMAND) -S$(CMAKE_SOURCE_DIR) -B$(CMAKE_BINARY_DIR) --check-build-system CMakeFiles\Makefile.cmake 0
+	cd /d E:\ProgalapTGProjekt\cmake-build-debug && $(CMAKE_COMMAND) -S$(CMAKE_SOURCE_DIR) -B$(CMAKE_BINARY_DIR) --check-build-system CMakeFiles\Makefile.cmake 0
 .PHONY : cmake_check_build_system
 

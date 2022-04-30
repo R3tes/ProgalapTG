@@ -1,4 +1,5 @@
 file(REMOVE_RECURSE
+  "CMakeFiles/ProgalapTGProjekt.dir/lib-sakk/sakk.c.obj"
   "CMakeFiles/ProgalapTGProjekt.dir/main.c.obj"
   "ProgalapTGProjekt.exe"
   "ProgalapTGProjekt.exe.manifest"

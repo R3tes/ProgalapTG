@@ -8,13 +8,13 @@ set(CMAKE_DEPENDS_LANGUAGES
   )
 # The set of files for implicit dependencies of each language:
 set(CMAKE_DEPENDS_CHECK_C
-  "E:/ProgalapTGProjekt/lib-sakk/sakk.c" "E:/ProgalapTGProjekt/cmake-build-debug/CMakeFiles/ProgalapTGProjekt.dir/lib-sakk/sakk.c.obj"
-  "E:/ProgalapTGProjekt/main.c" "E:/ProgalapTGProjekt/cmake-build-debug/CMakeFiles/ProgalapTGProjekt.dir/main.c.obj"
+  "E:/ProgalapTGProjekt/libsakk/sakk.c" "E:/ProgalapTGProjekt/cmake-build-debug/libsakk/CMakeFiles/sakk.dir/sakk.c.obj"
   )
 set(CMAKE_C_COMPILER_ID "GNU")
 
 # The include file search paths:
 set(CMAKE_C_TARGET_INCLUDE_PATH
+  "../libsakk"
   )
 
 # The set of dependency files which are needed:

@@ -1,0 +1,16 @@
+#IncludeRegexLine: ^[ 	]*[#%][ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+../libsakk/sakk.h
+
+E:/ProgalapTGProjekt/main/main.c
+stdio.h
+-
+sakk.h
+E:/ProgalapTGProjekt/main/sakk.h
+
