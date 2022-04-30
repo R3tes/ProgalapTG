@@ -11,10 +11,10 @@ int main() {
     tabla_inicializal(tabla);
     tabla_kiir(tabla);
 
-    setlocale(LC_CTYPE, "");
+    /*setlocale(LC_CTYPE, "");
     for (wchar_t p = 0x2654; p <= 0x265F; p++) {
         wprintf(L"%lc\n", p);
-    }
+    }*/
     return 0;
 }
 
