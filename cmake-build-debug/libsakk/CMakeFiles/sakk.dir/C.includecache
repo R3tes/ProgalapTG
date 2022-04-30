@@ -9,4 +9,16 @@
 E:/ProgalapTGProjekt/libsakk/sakk.c
 stdio.h
 -
+stdbool.h
+-
+malloc.h
+-
+wchar.h
+-
+locale.h
+-
+sakk.h
+E:/ProgalapTGProjekt/libsakk/sakk.h
+
+E:/ProgalapTGProjekt/libsakk/sakk.h
 

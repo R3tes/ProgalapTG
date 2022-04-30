@@ -11,6 +11,12 @@
 E:/ProgalapTGProjekt/main/main.c
 stdio.h
 -
+stdbool.h
+-
 sakk.h
 E:/ProgalapTGProjekt/main/sakk.h
+wchar.h
+-
+locale.h
+-
 
