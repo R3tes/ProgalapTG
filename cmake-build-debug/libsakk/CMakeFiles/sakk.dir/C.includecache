@@ -13,9 +13,7 @@ stdbool.h
 -
 malloc.h
 -
-wchar.h
--
-locale.h
+ctype.h
 -
 sakk.h
 E:/ProgalapTGProjekt/libsakk/sakk.h

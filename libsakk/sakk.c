@@ -1,10 +1,7 @@
 #include <stdio.h>
 #include <stdbool.h>
 #include <malloc.h>
-
-#include <wchar.h>
-#include <locale.h>
-
+#include <ctype.h>
 #include "sakk.h"
 
 mezo **tabla_letrehoz() {
@@ -21,6 +18,7 @@ void tabla_inicializal(mezo **tabla) {
             tabla[i][j].tartalom[0] = '[';
             tabla[i][j].tartalom[1] = '_';
             tabla[i][j].tartalom[2] = ']';
+            tabla[i][j].tartalom[3] = '\0';
         }
     }
 }
@@ -45,4 +43,46 @@ void tabla_kiir(mezo **tabla) {
         }
         printf("\n");
     }
+}
+
+void tabla_feltolt(mezo **tabla) {
+    char roviditesek[9] = "blfkvflb";
+    for (int i = 0; i < PALYAMERET; i++) {
+        int sorindex = 0;
+        for (int j = 0; j < PALYAMERET; j++) {
+            bool set = true;
+            babu ujbabu;
+            ujbabu.pos_i = i;
+            ujbabu.pos_j = j;
+            ujbabu.feher == (i < 5) ? false : true;
+
+            switch (i) {
+                case 1:
+                case 6: {
+                    ujbabu.tartalom = (i == 1) ? 'p' : 'P';
+                    break;
+                }
+
+                case 0:
+                case 7: {
+                    ujbabu.tartalom = (i == 0) ? roviditesek[sorindex] : toupper(roviditesek[sorindex]);
+                    sorindex++;
+                    if (sorindex == 8) {
+                        sorindex = 0;
+                    }
+                    break;
+                }
+
+                default:
+                    set = false;
+            }
+
+            if (set) {
+                tabla[i][j].mezobabu = ujbabu;
+                tabla[i][j].foglalt = true;
+                tabla[i][j].tartalom[1] = ujbabu.tartalom;
+            }
+        }
+    }
+
 }

@@ -15,8 +15,6 @@ stdbool.h
 -
 sakk.h
 E:/ProgalapTGProjekt/main/sakk.h
-wchar.h
--
-locale.h
+ctype.h
 -
 
