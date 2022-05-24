@@ -6,7 +6,6 @@
 
 mezo tabla[PALYAMERET][PALYAMERET];
 
-<<<<<<< HEAD
 mezo **tabla_letrehoz() {
     mezo **tabla = (mezo **) malloc(PALYAMERET * sizeof(mezo *));
     for (int i = 0; i < PALYAMERET; i++) {
@@ -39,9 +38,6 @@ void jatekos_beker() {
 }
 
 void tabla_inicializal(mezo **tabla) {
-=======
-void tabla_inicializal() {
->>>>>>> c9e62da3f853e67a974dd60d1a54cb0bd125cbb7
     for (int i = 0; i < PALYAMERET; i++) {
         for (int j = 0; j < PALYAMERET; j++) {
             tabla[i][j].tartalom[0] = '[';
