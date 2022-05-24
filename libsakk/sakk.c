@@ -4,8 +4,9 @@
 #include <ctype.h>
 #include "sakk.h"
 
-jatekos j;
+mezo tabla[PALYAMERET][PALYAMERET];
 
+<<<<<<< HEAD
 mezo **tabla_letrehoz() {
     mezo **tabla = (mezo **) malloc(PALYAMERET * sizeof(mezo *));
     for (int i = 0; i < PALYAMERET; i++) {
@@ -38,6 +39,9 @@ void jatekos_beker() {
 }
 
 void tabla_inicializal(mezo **tabla) {
+=======
+void tabla_inicializal() {
+>>>>>>> c9e62da3f853e67a974dd60d1a54cb0bd125cbb7
     for (int i = 0; i < PALYAMERET; i++) {
         for (int j = 0; j < PALYAMERET; j++) {
             tabla[i][j].tartalom[0] = '[';
@@ -49,7 +53,7 @@ void tabla_inicializal(mezo **tabla) {
 }
 
 
-void tabla_kiir(mezo **tabla) {
+void tabla_kiir() {
     printf("   ");
     for (char i = 'A'; i < 'A' + PALYAMERET; i++) {
         printf(" %c ", i);
@@ -69,11 +73,11 @@ void tabla_kiir(mezo **tabla) {
         printf("\n");
     }
 
-    printf("A vilagos jatekos neve: %s %d\n", j[0].nev, j[0].feher);
-    printf("A sotet jatekos neve: %s %d\n", j[1].nev, j[1].feher);
+    //printf("A vilagos jatekos neve: %s %d\n", j[0].nev, j[0].feher);
+    //printf("A sotet jatekos neve: %s %d\n", j[1].nev, j[1].feher);
 }
 
-void tabla_feltolt(mezo **tabla) {
+void tabla_feltolt() {
     char roviditesek[9] = "blfkvflb";
     for (int i = 0; i < PALYAMERET; i++) {
         int sorindex = 0;
@@ -82,7 +86,7 @@ void tabla_feltolt(mezo **tabla) {
             babu ujbabu;
             ujbabu.pos_i = i;
             ujbabu.pos_j = j;
-            ujbabu.feher == (i < 5) ? false : true;
+            ujbabu.feher = (i < 5) ? false : true;
 
             switch (i) {
                 case 1:
@@ -112,5 +116,44 @@ void tabla_feltolt(mezo **tabla) {
             }
         }
     }
+
+}
+
+bool jatek_elment(char *filenev) {
+
+    FILE *output = fopen(filenev, "w");
+
+    //TODO meg kell: jatekosok nevei, lepesek listaja; jelenleg kizarolag: tabla
+
+    for (int i = 0; i < PALYAMERET; i++) {
+        for (int j = 0; j < PALYAMERET; j++) {
+            /* format: tartalom foglalt babu_tartalom babu_pos_i babu_pos_j babu_feher\n */
+            fprintf(output, "%c%c%c%c%d%c%d%d%d\n", tabla[i][j].tartalom[0], tabla[i][j].tartalom[1], tabla[i][j].tartalom[2], tabla[i][j].tartalom[3], tabla[i][j].foglalt, tabla[i][j].mezobabu.tartalom, tabla[i][j].mezobabu.pos_i, tabla[i][j].mezobabu.pos_j, tabla[i][j].mezobabu.feher);
+        }
+    }
+
+    fclose(output);
+
+    return true;
+
+}
+
+bool jatek_betolt(char *filenev) {
+
+    FILE *input;
+
+    if (!(input = fopen(filenev, "r"))) { 
+        return false;
+    }
+
+    //TODO ugyanazokat potolni, mint az elozonel
+
+    for (int i = 0; i < PALYAMERET; i++) {
+        for (int j = 0; j < PALYAMERET; j++) {
+            fscanf(input, "%c%c%c%c%d%c%d%d%d*", &tabla[i][j].tartalom[0], &tabla[i][j].tartalom[1], &tabla[i][j].tartalom[2], &tabla[i][j].tartalom[3], &tabla[i][j].foglalt, &tabla[i][j].mezobabu.tartalom, &tabla[i][j].mezobabu.pos_i, &tabla[i][j].mezobabu.pos_j, &tabla[i][j].mezobabu.feher);
+        }
+    }
+
+    return true;
 
 }

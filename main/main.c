@@ -1,15 +1,17 @@
 #include <stdio.h>
 #include <stdbool.h>
 #include "sakk.h"
-#include <ctype.h>
 
 int main() {
 
-    jatekos_beker();
-    mezo **tabla = tabla_letrehoz();
-    tabla_inicializal(tabla);
-    tabla_feltolt(tabla);
-    tabla_kiir(tabla);
+    tabla_inicializal();
+    tabla_feltolt();
+    tabla_kiir();
+    //if (jatek_elment("teszt.txt")) printf("mentes done\n");
+    //if (jatek_betolt("teszt.txt")) {
+    //    printf ("betoltes ok, itt van a palya: \n");
+    //    tabla_kiir();
+    //}
 
     return 0;
 }
