@@ -4,12 +4,37 @@
 #include <ctype.h>
 #include "sakk.h"
 
+jatekos j;
+
 mezo **tabla_letrehoz() {
     mezo **tabla = (mezo **) malloc(PALYAMERET * sizeof(mezo *));
     for (int i = 0; i < PALYAMERET; i++) {
         tabla[i] = (mezo *) malloc(PALYAMERET * sizeof(mezo));
     }
     return tabla;
+}
+
+void jatekos_beker() {
+
+    char *szin = "vilagos";
+
+    for (int i = 0; i < 2; i++) {
+        j[i].nev = (char *) malloc(50 * sizeof(char *));
+
+        if (i > 0) {
+            szin = "sotet";
+        }
+
+        printf("Adja meg a %s jatekos nevet:\n", szin);
+        scanf("%s", j[i].nev);
+
+        if (i < 0) {
+            j[i].feher = true;
+        } else {
+            j[i].feher = false;
+        }
+    }
+
 }
 
 void tabla_inicializal(mezo **tabla) {
@@ -43,6 +68,9 @@ void tabla_kiir(mezo **tabla) {
         }
         printf("\n");
     }
+
+    printf("A vilagos jatekos neve: %s %d\n", j[0].nev, j[0].feher);
+    printf("A sotet jatekos neve: %s %d\n", j[1].nev, j[1].feher);
 }
 
 void tabla_feltolt(mezo **tabla) {

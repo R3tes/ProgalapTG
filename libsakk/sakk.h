@@ -18,6 +18,13 @@ typedef struct {
     babu mezobabu;
 } mezo;
 
+typedef struct {
+    bool feher;
+    char *nev;
+} jatekos[2];
+
+void jatekos_beker();
+
 void tabla_kiir(mezo **tabla);
 
 void tabla_inicializal(mezo **tabla);

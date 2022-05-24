@@ -5,6 +5,7 @@
 
 int main() {
 
+    jatekos_beker();
     mezo **tabla = tabla_letrehoz();
     tabla_inicializal(tabla);
     tabla_feltolt(tabla);
