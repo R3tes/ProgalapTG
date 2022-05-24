@@ -2,9 +2,6 @@
 #define SAKK_H
 
 #define PALYAMERET 8
-#define SWITCH_TO_COLOR_RED printf("\033[0;31m");
-#define SWITCH_TO_DEFAULT_COLOR printf("\033[0m");
-#define SWITCH_TO_COLOR_BLUE printf("\033[0;34m");
 
 typedef struct {
     char tartalom;
@@ -18,12 +15,14 @@ typedef struct {
     babu mezobabu;
 } mezo;
 
-void tabla_kiir(mezo **tabla);
+void tabla_kiir();
 
-void tabla_inicializal(mezo **tabla);
+void tabla_inicializal();
 
-mezo **tabla_letrehoz();
+void tabla_feltolt();
 
-void tabla_feltolt(mezo **tabla);
+bool jatek_elment(char *filenev);
+
+bool jatek_betolt(char *filenev);
 
 #endif //SAKK_H
