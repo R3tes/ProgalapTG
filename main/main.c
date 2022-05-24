@@ -4,6 +4,7 @@
 
 int main() {
 
+    jatekos_beker();
     tabla_inicializal();
     tabla_feltolt();
     tabla_kiir();

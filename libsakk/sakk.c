@@ -5,14 +5,7 @@
 #include "sakk.h"
 
 mezo tabla[PALYAMERET][PALYAMERET];
-
-mezo **tabla_letrehoz() {
-    mezo **tabla = (mezo **) malloc(PALYAMERET * sizeof(mezo *));
-    for (int i = 0; i < PALYAMERET; i++) {
-        tabla[i] = (mezo *) malloc(PALYAMERET * sizeof(mezo));
-    }
-    return tabla;
-}
+jatekos j;
 
 void jatekos_beker() {
 
@@ -37,7 +30,7 @@ void jatekos_beker() {
 
 }
 
-void tabla_inicializal(mezo **tabla) {
+void tabla_inicializal() {
     for (int i = 0; i < PALYAMERET; i++) {
         for (int j = 0; j < PALYAMERET; j++) {
             tabla[i][j].tartalom[0] = '[';
@@ -47,7 +40,6 @@ void tabla_inicializal(mezo **tabla) {
         }
     }
 }
-
 
 void tabla_kiir() {
     printf("   ");
@@ -69,8 +61,8 @@ void tabla_kiir() {
         printf("\n");
     }
 
-    //printf("A vilagos jatekos neve: %s %d\n", j[0].nev, j[0].feher);
-    //printf("A sotet jatekos neve: %s %d\n", j[1].nev, j[1].feher);
+    printf("A vilagos jatekos neve: %s %d\n", j[0].nev, j[0].feher);
+    printf("A sotet jatekos neve: %s %d\n", j[1].nev, j[1].feher);
 }
 
 void tabla_feltolt() {
@@ -124,21 +116,23 @@ bool jatek_elment(char *filenev) {
     for (int i = 0; i < PALYAMERET; i++) {
         for (int j = 0; j < PALYAMERET; j++) {
             /* format: tartalom foglalt babu_tartalom babu_pos_i babu_pos_j babu_feher\n */
-            fprintf(output, "%c%c%c%c%d%c%d%d%d\n", tabla[i][j].tartalom[0], tabla[i][j].tartalom[1], tabla[i][j].tartalom[2], tabla[i][j].tartalom[3], tabla[i][j].foglalt, tabla[i][j].mezobabu.tartalom, tabla[i][j].mezobabu.pos_i, tabla[i][j].mezobabu.pos_j, tabla[i][j].mezobabu.feher);
+            fprintf(output, "%c%c%c%c%d%c%d%d%d\n", tabla[i][j].tartalom[0], tabla[i][j].tartalom[1],
+                    tabla[i][j].tartalom[2], tabla[i][j].tartalom[3], tabla[i][j].foglalt,
+                    tabla[i][j].mezobabu.tartalom, tabla[i][j].mezobabu.pos_i, tabla[i][j].mezobabu.pos_j,
+                    tabla[i][j].mezobabu.feher);
         }
     }
 
     fclose(output);
 
     return true;
-
 }
 
 bool jatek_betolt(char *filenev) {
 
     FILE *input;
 
-    if (!(input = fopen(filenev, "r"))) { 
+    if (!(input = fopen(filenev, "r"))) {
         return false;
     }
 
@@ -146,7 +140,10 @@ bool jatek_betolt(char *filenev) {
 
     for (int i = 0; i < PALYAMERET; i++) {
         for (int j = 0; j < PALYAMERET; j++) {
-            fscanf(input, "%c%c%c%c%d%c%d%d%d*", &tabla[i][j].tartalom[0], &tabla[i][j].tartalom[1], &tabla[i][j].tartalom[2], &tabla[i][j].tartalom[3], &tabla[i][j].foglalt, &tabla[i][j].mezobabu.tartalom, &tabla[i][j].mezobabu.pos_i, &tabla[i][j].mezobabu.pos_j, &tabla[i][j].mezobabu.feher);
+            fscanf(input, "%c%c%c%c%d%c%d%d%d*", &tabla[i][j].tartalom[0], &tabla[i][j].tartalom[1],
+                   &tabla[i][j].tartalom[2], &tabla[i][j].tartalom[3], &tabla[i][j].foglalt,
+                   &tabla[i][j].mezobabu.tartalom, &tabla[i][j].mezobabu.pos_i, &tabla[i][j].mezobabu.pos_j,
+                   &tabla[i][j].mezobabu.feher);
         }
     }
 
