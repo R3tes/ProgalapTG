@@ -1,8 +1,0 @@
-/home/abakk/edu/progalap_kotprog/ProgalapTG/build/CMakeFiles/edit_cache.dir
-/home/abakk/edu/progalap_kotprog/ProgalapTG/build/CMakeFiles/rebuild_cache.dir
-/home/abakk/edu/progalap_kotprog/ProgalapTG/build/libsakk/CMakeFiles/sakk.dir
-/home/abakk/edu/progalap_kotprog/ProgalapTG/build/libsakk/CMakeFiles/edit_cache.dir
-/home/abakk/edu/progalap_kotprog/ProgalapTG/build/libsakk/CMakeFiles/rebuild_cache.dir
-/home/abakk/edu/progalap_kotprog/ProgalapTG/build/main/CMakeFiles/main.dir
-/home/abakk/edu/progalap_kotprog/ProgalapTG/build/main/CMakeFiles/edit_cache.dir
-/home/abakk/edu/progalap_kotprog/ProgalapTG/build/main/CMakeFiles/rebuild_cache.dir

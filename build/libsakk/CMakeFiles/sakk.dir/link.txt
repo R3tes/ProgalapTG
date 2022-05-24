@@ -1,2 +1,0 @@
-/usr/bin/ar qc libsakk.a CMakeFiles/sakk.dir/sakk.c.o
-/usr/bin/ranlib libsakk.a
