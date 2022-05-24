@@ -28,7 +28,7 @@ void jatekos_beker() {
         printf("Adja meg a %s jatekos nevet:\n", szin);
         scanf("%s", j[i].nev);
 
-        if (i < 0) {
+        if (i < 1) {
             j[i].feher = true;
         } else {
             j[i].feher = false;
