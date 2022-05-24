@@ -15,7 +15,18 @@ typedef struct {
     babu mezobabu;
 } mezo;
 
+<<<<<<< HEAD
 void tabla_kiir();
+=======
+typedef struct {
+    bool feher;
+    char *nev;
+} jatekos[2];
+
+void jatekos_beker();
+
+void tabla_kiir(mezo **tabla);
+>>>>>>> a142f47268e77359745466078cf18dec845a9b71
 
 void tabla_inicializal();
 
