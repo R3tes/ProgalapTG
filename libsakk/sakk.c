@@ -7,6 +7,9 @@
 mezo tabla[PALYAMERET][PALYAMERET];
 jatekos j;
 
+struct lepes *fej = NULL;
+struct lepes *jelenlegi = NULL;
+
 void jatekos_beker() {
 
     char *szin = "vilagos";
@@ -28,6 +31,34 @@ void jatekos_beker() {
         }
     }
 
+}
+
+void lepesek_kiirasa() {                    //tesztekhez
+    struct lepes *mutato = fej;
+
+    while (mutato != NULL) {
+        printf("(%d, %d, %d) ", mutato->sor, mutato->oszlop, mutato->kor);
+        mutato = mutato->kovetkezo;
+    }
+}
+
+void lepes_eltarolas(int sor, int oszlop, int kor) {
+
+    struct lepes *aktualis = (struct lepes*) malloc(sizeof(struct lepes));
+
+    aktualis->sor = sor;
+    aktualis->oszlop = oszlop;
+    aktualis->kor=kor;
+
+    aktualis->kovetkezo = fej;
+
+    fej = aktualis;
+}
+
+void lepesek(){
+    while (1){
+        
+    }
 }
 
 void tabla_inicializal() {

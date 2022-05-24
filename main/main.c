@@ -14,6 +14,11 @@ int main() {
     //    tabla_kiir();
     //}
 
+    lepes_eltarolas(1, 1, 1);
+    lepes_eltarolas(2, 2, 2);
+    lepes_eltarolas(3, 3, 3);
+    lepesek_kiirasa();
+
     return 0;
 }
 

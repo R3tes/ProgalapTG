@@ -20,7 +20,20 @@ typedef struct {
     char *nev;
 } jatekos[2];
 
+typedef struct lepes {
+    int oszlop;
+    int sor;
+    int kor;
+    struct lepes* kovetkezo;
+}lepes;
+
+void lepesek_kiirasa();
+
+void lepes_eltarolas();
+
 void jatekos_beker();
+
+void jatekos_lepes();
 
 void tabla_kiir();
 
