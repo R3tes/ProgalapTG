@@ -1,7 +1,6 @@
 #include <stdio.h>
 #include <stdbool.h>
 #include "sakk.h"
-#include <ctype.h>
 
 int main() {
 
