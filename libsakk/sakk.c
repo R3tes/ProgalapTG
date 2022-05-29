@@ -7,8 +7,7 @@
 mezo tabla[PALYAMERET][PALYAMERET];
 jatekos j;
 
-struct lepes *fej = NULL;
-struct lepes *jelenlegi = NULL;
+csomopont_t *head = NULL;
 
 void jatekos_beker() {
 
@@ -33,32 +32,32 @@ void jatekos_beker() {
 
 }
 
-void lepesek_kiirasa() {                    //tesztekhez
-    struct lepes *mutato = fej;
-
-    while (mutato != NULL) {
-        printf("(%d, %d, %d) ", mutato->sor, mutato->oszlop, mutato->kor);
-        mutato = mutato->kovetkezo;
+void list_hozzaad(lepes *milyen_lepes) {
+    csomopont_t *res = (csomopont_t *) malloc(1 * sizeof(csomopont_t));
+    res->aktualis_lepes = milyen_lepes;
+    res->kovetkezo = NULL;
+    if (head == NULL) {
+        head = res;
+    }
+    else {
+        res->kovetkezo = head;
+        head = res;
     }
 }
 
-void lepes_eltarolas(int sor, int oszlop, int kor) {
-
-    struct lepes *aktualis = (struct lepes*) malloc(sizeof(struct lepes));
-
-    aktualis->sor = sor;
-    aktualis->oszlop = oszlop;
-    aktualis->kor=kor;
-
-    aktualis->kovetkezo = fej;
-
-    fej = aktualis;
+void list_print() {
+    if (head == NULL) return;
+    csomopont_t *temp = head;
+    while (temp != NULL) {
+        printf("%d\n", temp->aktualis_lepes->kor); // jelenleg csak a kort printeli
+        temp = temp->kovetkezo;
+    }
 }
 
-void lepesek(){
-    while (1){
-        
-    }
+void list_torol_elejerol() {
+    csomopont_t *temp = head;
+    head = head->kovetkezo;
+    free(temp);
 }
 
 void tabla_inicializal() {

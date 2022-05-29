@@ -24,12 +24,20 @@ typedef struct lepes {
     int oszlop;
     int sor;
     int kor;
-    struct lepes* kovetkezo;
-}lepes;
+} lepes;
 
-void lepesek_kiirasa();
+struct csomopont {
+    lepes *aktualis_lepes;
+    struct csomopont *kovetkezo;
+};
 
-void lepes_eltarolas();
+typedef struct csomopont csomopont_t;
+
+void list_hozzaad(lepes *milyen_lepes);
+
+void list_print();
+
+void list_torol_elejerol();
 
 void jatekos_beker();
 

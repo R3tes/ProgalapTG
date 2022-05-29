@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <stdbool.h>
+#include <stdlib.h>
 #include "sakk.h"
 
 int main() {
@@ -8,16 +9,19 @@ int main() {
     tabla_inicializal();
     tabla_feltolt();
     tabla_kiir();
-    //if (jatek_elment("teszt.txt")) printf("mentes done\n");
-    //if (jatek_betolt("teszt.txt")) {
-    //    printf ("betoltes ok, itt van a palya: \n");
-    //    tabla_kiir();
-    //}
-
-    lepes_eltarolas(1, 1, 1);
-    lepes_eltarolas(2, 2, 2);
-    lepes_eltarolas(3, 3, 3);
-    lepesek_kiirasa();
+    
+    lepes *uj = (lepes *) malloc (1 * sizeof(lepes));
+    uj->kor = 0;
+    lepes *uj2 = (lepes *) malloc (1 * sizeof(lepes));
+    uj2->kor = 1;
+    list_hozzaad(uj);
+    list_hozzaad(uj2);
+    list_print();
+    list_torol_elejerol();
+    printf("----------\n");
+    list_print();
+    free(uj);
+    free(uj2);
 
     return 0;
 }
