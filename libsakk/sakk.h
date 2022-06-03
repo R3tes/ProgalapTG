@@ -18,7 +18,7 @@ typedef struct {
 typedef struct {
     bool feher;
     char *nev;
-} jatekos[2];
+} jatekos;
 
 typedef struct lepes {
     int oszlop;
@@ -52,5 +52,17 @@ void tabla_feltolt();
 bool jatek_elment(char *filenev);
 
 bool jatek_betolt(char *filenev);
+
+void tabla_test_print();
+
+void input_test();
+
+void convert_coord(int *elso, int *masodik);
+
+bool validate_coord(int *elso, int *masodik);
+
+bool lepes_f();
+
+void reset_tartalom(mezo *honnan);
 
 #endif //SAKK_H

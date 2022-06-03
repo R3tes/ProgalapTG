@@ -4,8 +4,10 @@
 #include <ctype.h>
 #include "sakk.h"
 
+#define btoi(b) ((b) ? 1 : 0)
+
 mezo tabla[PALYAMERET][PALYAMERET];
-jatekos j;
+jatekos j[2];
 
 csomopont_t *head = NULL;
 
@@ -91,8 +93,8 @@ void tabla_kiir() {
         printf("\n");
     }
 
-    printf("A vilagos jatekos neve: %s %d\n", j[0].nev, j[0].feher);
-    printf("A sotet jatekos neve: %s %d\n", j[1].nev, j[1].feher);
+    printf("A vilagos jatekos neve: %s %d\n", j[0].nev, btoi(j[0].feher));
+    printf("A sotet jatekos neve: %s %d\n", j[1].nev, btoi(j[1].feher));
 }
 
 void tabla_feltolt() {
@@ -149,7 +151,7 @@ bool jatek_elment(char *filenev) {
             fprintf(output, "%c%c%c%c%d%c%d%d%d\n", tabla[i][j].tartalom[0], tabla[i][j].tartalom[1],
                     tabla[i][j].tartalom[2], tabla[i][j].tartalom[3], tabla[i][j].foglalt,
                     tabla[i][j].mezobabu.tartalom, tabla[i][j].mezobabu.pos_i, tabla[i][j].mezobabu.pos_j,
-                    tabla[i][j].mezobabu.feher);
+                    btoi(tabla[i][j].mezobabu.feher));
         }
     }
 
@@ -170,13 +172,82 @@ bool jatek_betolt(char *filenev) {
 
     for (int i = 0; i < PALYAMERET; i++) {
         for (int j = 0; j < PALYAMERET; j++) {
-            fscanf(input, "%c%c%c%c%d%c%d%d%d*", &tabla[i][j].tartalom[0], &tabla[i][j].tartalom[1],
-                   &tabla[i][j].tartalom[2], &tabla[i][j].tartalom[3], &tabla[i][j].foglalt,
+            int tmp1, tmp2;
+            fscanf(input, "%c%c%c%c%d%c%hd%hd%d*", &tabla[i][j].tartalom[0], &tabla[i][j].tartalom[1],
+                   &tabla[i][j].tartalom[2], &tabla[i][j].tartalom[3], &tmp1,
                    &tabla[i][j].mezobabu.tartalom, &tabla[i][j].mezobabu.pos_i, &tabla[i][j].mezobabu.pos_j,
-                   &tabla[i][j].mezobabu.feher);
+                   &tmp2);
+            tabla[i][j].foglalt = tmp1;
+            tabla[i][j].mezobabu.feher = tmp2;
         }
     }
 
     return true;
 
+}
+
+void tabla_test_print() {
+    for (int i = 0; i < PALYAMERET; i++) {
+        for (int j = 0; j < PALYAMERET; j++) {
+            printf("%c ", tabla[i][j].tartalom[1]);
+        }
+        printf("\n");
+    }
+}
+
+void input_test() {
+    int elso, masodik;
+    char temp;
+    printf("Sor: ");
+    scanf("%d", &elso);
+    getc(stdin);
+    printf("Oszlop: ");
+    scanf("%c", &temp);
+    masodik = toupper((int)temp);
+    convert_coord(&elso, &masodik);
+    if (validate_coord(&elso, &masodik)) {
+        printf("sor: %d, oszlop: %d\n", elso, masodik);
+    } else {
+        printf("hibas koordinatak\n");
+    }
+}
+
+bool lepes_f() {
+    // logolni kell a lepest
+    int honnan_s, honnan_o, hova_s, hova_o;
+    char tmp;
+    printf("Melyik babuval szeretne lepni? Sor, oszlop (pl. 6C): ");
+    scanf("%d%c", &honnan_s, &tmp);
+    honnan_o = toupper((int)tmp);
+    printf("Hova szeretne lepni? Sor, oszlop: ");
+    scanf("%d%c", &hova_s, &tmp);
+    hova_o = toupper((int)tmp);
+    convert_coord(&honnan_s, &honnan_o);
+    convert_coord(&hova_s, &hova_o);
+    if (!validate_coord(&honnan_s, &honnan_o) || !validate_coord(&hova_s, &hova_o) || tabla[hova_s][hova_o].foglalt) {
+        printf("Nem megfelelo koordinatak vagy a mezo foglalt, sikertelen lepes!\n");
+        return false;
+    }
+    tabla[hova_s][hova_o].tartalom[1] = tabla[honnan_s][honnan_o].tartalom[1];
+    tabla[hova_s][hova_o].mezobabu = tabla[honnan_s][honnan_o].mezobabu;
+    tabla[hova_s][hova_o].foglalt = true;
+    reset_tartalom(&tabla[honnan_s][honnan_o]);
+    return true;
+}
+
+void convert_coord(int *elso, int *masodik) {
+    *elso = PALYAMERET - *elso;
+    *masodik = *masodik - (int) 'A';
+}
+
+bool validate_coord(int *elso, int *masodik) {
+    return *elso >= 0 && *elso < PALYAMERET && *masodik >= 0 && *masodik < PALYAMERET;
+}
+
+void reset_tartalom(mezo *honnan) {
+    honnan->tartalom[0] = '[';
+    honnan->tartalom[1] = '_';
+    honnan->tartalom[2] = ']';
+    honnan->tartalom[3] = '\0';
+    honnan->foglalt = false;
 }
