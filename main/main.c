@@ -37,14 +37,13 @@ int main() {
     list_print();*/
 
     lepes_f();
-        list_print();
     tabla_kiir();
     lepes_f();
     tabla_kiir();
     list_print();
-    //visszalepes_f();
-    //tabla_kiir();
-    //list_print();
+    visszalepes_f();
+    tabla_kiir();
+    list_print();
 
 
     m_cleanup();

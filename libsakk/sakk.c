@@ -37,7 +37,7 @@ void jatekos_beker() {
 
 }
 
-void list_hozzaad(lepes *milyen_lepes) {
+void list_hozzaad(lepes milyen_lepes) {
     csomopont_t *res = (csomopont_t *) malloc(1 * sizeof(csomopont_t));
     res->aktualis_lepes = milyen_lepes;
     res->kovetkezo = NULL;
@@ -54,9 +54,8 @@ void list_print() {
     if (head == NULL) return;
     csomopont_t *temp = head;
     while (temp != NULL) {
-        printf("Honnan: %d%c. Hova: %d%c. Mivel: %c.\n", reverse_coord_s(&temp->aktualis_lepes->honnan_s), (char) reverse_coord_o(&temp->aktualis_lepes->honnan_o),
-                                                        reverse_coord_s(&temp->aktualis_lepes->hova_s), (char) reverse_coord_o(&temp->aktualis_lepes->hova_o), temp->aktualis_lepes->mezobabu.tartalom);
-        printf ("INSIDE kiir: %d %d\n", temp->aktualis_lepes->hova_s, temp->aktualis_lepes->hova_o);
+        printf("Honnan: %d%c. Hova: %d%c. Mivel: %c.\n", reverse_coord_s(&temp->aktualis_lepes.honnan_s), (char) reverse_coord_o(&temp->aktualis_lepes.honnan_o),
+                                                        reverse_coord_s(&temp->aktualis_lepes.hova_s), (char) reverse_coord_o(&temp->aktualis_lepes.hova_o), temp->aktualis_lepes.mezobabu.tartalom);
         temp = temp->kovetkezo;
     }
 }
@@ -219,6 +218,7 @@ bool lepes_f() {
     printf("Melyik babuval szeretne lepni? Sor, oszlop (pl. 6C): ");
     scanf("%d%c", &honnan_s, &tmp);
     honnan_o = toupper((int)tmp);
+    getc(stdin);
     printf("Hova szeretne lepni? Sor, oszlop: ");
     scanf("%d%c", &hova_s, &tmp);
     hova_o = toupper((int)tmp);
@@ -232,7 +232,7 @@ bool lepes_f() {
     tabla[hova_s][hova_o].mezobabu = tabla[honnan_s][honnan_o].mezobabu;
     tabla[hova_s][hova_o].foglalt = true;
     lepes lepes_new = {honnan_s, honnan_o, hova_s, hova_o, tabla[hova_s][hova_o].mezobabu, kor};
-    list_hozzaad(&lepes_new);
+    list_hozzaad(lepes_new);
     reset_tartalom(&tabla[honnan_s][honnan_o]);
     return true;
 }
@@ -243,10 +243,10 @@ bool visszalepes_f() {
         return false;
     }
     csomopont_t *temp = head;
-    tabla[temp->aktualis_lepes->honnan_s][temp->aktualis_lepes->honnan_s].tartalom[1] = temp->aktualis_lepes->mezobabu.tartalom;
-    tabla[temp->aktualis_lepes->honnan_s][temp->aktualis_lepes->honnan_s].foglalt = true;
-    reset_tartalom(&tabla[temp->aktualis_lepes->hova_s][temp->aktualis_lepes->hova_o]);
-    tabla[temp->aktualis_lepes->hova_s][temp->aktualis_lepes->hova_o].foglalt = false;
+    tabla[temp->aktualis_lepes.honnan_s][temp->aktualis_lepes.honnan_o].tartalom[1] = temp->aktualis_lepes.mezobabu.tartalom;
+    tabla[temp->aktualis_lepes.honnan_s][temp->aktualis_lepes.honnan_o].foglalt = true;
+    reset_tartalom(&tabla[temp->aktualis_lepes.hova_s][temp->aktualis_lepes.hova_o]);
+    tabla[temp->aktualis_lepes.hova_s][temp->aktualis_lepes.hova_o].foglalt = false;
     list_torol_elejerol();
     return true;
 }

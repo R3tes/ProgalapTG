@@ -26,13 +26,13 @@ typedef struct lepes {
 } lepes;
 
 struct csomopont {
-    lepes *aktualis_lepes;
+    lepes aktualis_lepes;
     struct csomopont *kovetkezo;
 };
 
 typedef struct csomopont csomopont_t;
 
-void list_hozzaad(lepes *milyen_lepes);
+void list_hozzaad(lepes milyen_lepes);
 
 void list_print();
 
