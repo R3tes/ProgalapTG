@@ -28,8 +28,26 @@ int main() {
 
     //input_test();
 
+    /*babu egy_b = {'p', true};
+    lepes egy = {0, 0, 5, 0, egy_b, 0};
+    babu ketto_b = {'a', false};
+    lepes ketto = {1, 1, 6, 6, ketto_b, 0};
+    list_hozzaad(&egy);
+    list_hozzaad(&ketto);
+    list_print();*/
+
+    lepes_f();
+        list_print();
+    tabla_kiir();
     lepes_f();
     tabla_kiir();
+    list_print();
+    //visszalepes_f();
+    //tabla_kiir();
+    //list_print();
+
+
+    m_cleanup();
 
     return 0;
 }

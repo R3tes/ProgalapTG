@@ -2,6 +2,7 @@
 #include <stdbool.h>
 #include <malloc.h>
 #include <ctype.h>
+#include <stdlib.h>
 #include "sakk.h"
 
 #define btoi(b) ((b) ? 1 : 0)
@@ -10,6 +11,8 @@ mezo tabla[PALYAMERET][PALYAMERET];
 jatekos j[2];
 
 csomopont_t *head = NULL;
+
+int kor = 0;
 
 void jatekos_beker() {
 
@@ -51,7 +54,9 @@ void list_print() {
     if (head == NULL) return;
     csomopont_t *temp = head;
     while (temp != NULL) {
-        printf("%d\n", temp->aktualis_lepes->kor); // jelenleg csak a kort printeli
+        printf("Honnan: %d%c. Hova: %d%c. Mivel: %c.\n", reverse_coord_s(&temp->aktualis_lepes->honnan_s), (char) reverse_coord_o(&temp->aktualis_lepes->honnan_o),
+                                                        reverse_coord_s(&temp->aktualis_lepes->hova_s), (char) reverse_coord_o(&temp->aktualis_lepes->hova_o), temp->aktualis_lepes->mezobabu.tartalom);
+        printf ("INSIDE kiir: %d %d\n", temp->aktualis_lepes->hova_s, temp->aktualis_lepes->hova_o);
         temp = temp->kovetkezo;
     }
 }
@@ -104,8 +109,6 @@ void tabla_feltolt() {
         for (int j = 0; j < PALYAMERET; j++) {
             bool set = true;
             babu ujbabu;
-            ujbabu.pos_i = i;
-            ujbabu.pos_j = j;
             ujbabu.feher = (i < 5) ? false : true;
 
             switch (i) {
@@ -148,10 +151,9 @@ bool jatek_elment(char *filenev) {
     for (int i = 0; i < PALYAMERET; i++) {
         for (int j = 0; j < PALYAMERET; j++) {
             /* format: tartalom foglalt babu_tartalom babu_pos_i babu_pos_j babu_feher\n */
-            fprintf(output, "%c%c%c%c%d%c%d%d%d\n", tabla[i][j].tartalom[0], tabla[i][j].tartalom[1],
+            fprintf(output, "%c%c%c%c%d%c%d\n", tabla[i][j].tartalom[0], tabla[i][j].tartalom[1],
                     tabla[i][j].tartalom[2], tabla[i][j].tartalom[3], tabla[i][j].foglalt,
-                    tabla[i][j].mezobabu.tartalom, tabla[i][j].mezobabu.pos_i, tabla[i][j].mezobabu.pos_j,
-                    btoi(tabla[i][j].mezobabu.feher));
+                    tabla[i][j].mezobabu.tartalom, btoi(tabla[i][j].mezobabu.feher));
         }
     }
 
@@ -173,10 +175,9 @@ bool jatek_betolt(char *filenev) {
     for (int i = 0; i < PALYAMERET; i++) {
         for (int j = 0; j < PALYAMERET; j++) {
             int tmp1, tmp2;
-            fscanf(input, "%c%c%c%c%d%c%hd%hd%d*", &tabla[i][j].tartalom[0], &tabla[i][j].tartalom[1],
+            fscanf(input, "%c%c%c%c%d%c%d*", &tabla[i][j].tartalom[0], &tabla[i][j].tartalom[1],
                    &tabla[i][j].tartalom[2], &tabla[i][j].tartalom[3], &tmp1,
-                   &tabla[i][j].mezobabu.tartalom, &tabla[i][j].mezobabu.pos_i, &tabla[i][j].mezobabu.pos_j,
-                   &tmp2);
+                   &tabla[i][j].mezobabu.tartalom, &tmp2);
             tabla[i][j].foglalt = tmp1;
             tabla[i][j].mezobabu.feher = tmp2;
         }
@@ -213,7 +214,6 @@ void input_test() {
 }
 
 bool lepes_f() {
-    // logolni kell a lepest
     int honnan_s, honnan_o, hova_s, hova_o;
     char tmp;
     printf("Melyik babuval szeretne lepni? Sor, oszlop (pl. 6C): ");
@@ -231,13 +231,39 @@ bool lepes_f() {
     tabla[hova_s][hova_o].tartalom[1] = tabla[honnan_s][honnan_o].tartalom[1];
     tabla[hova_s][hova_o].mezobabu = tabla[honnan_s][honnan_o].mezobabu;
     tabla[hova_s][hova_o].foglalt = true;
+    lepes lepes_new = {honnan_s, honnan_o, hova_s, hova_o, tabla[hova_s][hova_o].mezobabu, kor};
+    list_hozzaad(&lepes_new);
     reset_tartalom(&tabla[honnan_s][honnan_o]);
+    return true;
+}
+
+bool visszalepes_f() {
+    if (head == NULL) {
+        printf("Visszalepes sikertelen!");
+        return false;
+    }
+    csomopont_t *temp = head;
+    tabla[temp->aktualis_lepes->honnan_s][temp->aktualis_lepes->honnan_s].tartalom[1] = temp->aktualis_lepes->mezobabu.tartalom;
+    tabla[temp->aktualis_lepes->honnan_s][temp->aktualis_lepes->honnan_s].foglalt = true;
+    reset_tartalom(&tabla[temp->aktualis_lepes->hova_s][temp->aktualis_lepes->hova_o]);
+    tabla[temp->aktualis_lepes->hova_s][temp->aktualis_lepes->hova_o].foglalt = false;
+    list_torol_elejerol();
     return true;
 }
 
 void convert_coord(int *elso, int *masodik) {
     *elso = PALYAMERET - *elso;
     *masodik = *masodik - (int) 'A';
+}
+
+int reverse_coord_s(int *coord) {
+    int res = abs(*coord - PALYAMERET);
+    return res;
+}
+
+int reverse_coord_o(int *coord) {
+    int res = *coord + (int) 'A';
+    return res;
 }
 
 bool validate_coord(int *elso, int *masodik) {
@@ -250,4 +276,9 @@ void reset_tartalom(mezo *honnan) {
     honnan->tartalom[2] = ']';
     honnan->tartalom[3] = '\0';
     honnan->foglalt = false;
+}
+
+void m_cleanup() {
+    free(j[0].nev);
+    free(j[1].nev);
 }

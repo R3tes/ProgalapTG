@@ -5,7 +5,6 @@
 
 typedef struct {
     char tartalom;
-    short int pos_i, pos_j;
     bool feher;
 } babu;
 
@@ -21,8 +20,8 @@ typedef struct {
 } jatekos;
 
 typedef struct lepes {
-    int oszlop;
-    int sor;
+    int honnan_s, honnan_o, hova_s, hova_o;
+    babu mezobabu;
     int kor;
 } lepes;
 
@@ -63,6 +62,14 @@ bool validate_coord(int *elso, int *masodik);
 
 bool lepes_f();
 
+bool visszalepes_f();
+
 void reset_tartalom(mezo *honnan);
+
+void m_cleanup();
+
+int reverse_coord_s(int *coord);
+
+int reverse_coord_o(int *coord);
 
 #endif //SAKK_H
