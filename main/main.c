@@ -40,8 +40,11 @@ int main() {
     tabla_kiir();
     lepes_f();
     tabla_kiir();
-    list_print();
-    visszalepes_f();
+    lepes_f();
+    tabla_kiir();
+    lepes_f();
+    tabla_kiir();
+    visszalepes_interact(3);
     tabla_kiir();
     list_print();
 

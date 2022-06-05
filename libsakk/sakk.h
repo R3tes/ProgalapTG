@@ -62,7 +62,7 @@ bool validate_coord(int *elso, int *masodik);
 
 bool lepes_f();
 
-bool visszalepes_f();
+void visszalepes_f();
 
 void reset_tartalom(mezo *honnan);
 
@@ -71,5 +71,9 @@ void m_cleanup();
 int reverse_coord_s(int *coord);
 
 int reverse_coord_o(int *coord);
+
+int list_count();
+
+void visszalepes_interact(int n);
 
 #endif //SAKK_H

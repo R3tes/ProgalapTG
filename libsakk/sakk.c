@@ -50,20 +50,33 @@ void list_hozzaad(lepes milyen_lepes) {
     }
 }
 
+int list_count() {
+    if (head == NULL) return 0;
+    int res = 0;
+    csomopont_t *temp = head;
+    while (temp != NULL) {
+        res++;
+        temp = temp->kovetkezo;
+    }
+    return res;
+}
+
 void list_print() {
+    int count = 1;
     if (head == NULL) return;
     csomopont_t *temp = head;
     while (temp != NULL) {
-        printf("Honnan: %d%c. Hova: %d%c. Mivel: %c.\n", reverse_coord_s(&temp->aktualis_lepes.honnan_s), (char) reverse_coord_o(&temp->aktualis_lepes.honnan_o),
+        printf("%d. Honnan: %d%c. Hova: %d%c. Mivel: %c.\n", count, reverse_coord_s(&temp->aktualis_lepes.honnan_s), (char) reverse_coord_o(&temp->aktualis_lepes.honnan_o),
                                                         reverse_coord_s(&temp->aktualis_lepes.hova_s), (char) reverse_coord_o(&temp->aktualis_lepes.hova_o), temp->aktualis_lepes.mezobabu.tartalom);
+        count++;
         temp = temp->kovetkezo;
     }
 }
 
 void list_torol_elejerol() {
-    csomopont_t *temp = head;
+    csomopont_t *tmp = head;
     head = head->kovetkezo;
-    free(temp);
+    free(tmp);
 }
 
 void tabla_inicializal() {
@@ -237,10 +250,10 @@ bool lepes_f() {
     return true;
 }
 
-bool visszalepes_f() {
+void visszalepes_f() {
     if (head == NULL) {
-        printf("Visszalepes sikertelen!");
-        return false;
+        printf("Visszalepes sikertelen!\n");
+        return;
     }
     csomopont_t *temp = head;
     tabla[temp->aktualis_lepes.honnan_s][temp->aktualis_lepes.honnan_o].tartalom[1] = temp->aktualis_lepes.mezobabu.tartalom;
@@ -248,7 +261,6 @@ bool visszalepes_f() {
     reset_tartalom(&tabla[temp->aktualis_lepes.hova_s][temp->aktualis_lepes.hova_o]);
     tabla[temp->aktualis_lepes.hova_s][temp->aktualis_lepes.hova_o].foglalt = false;
     list_torol_elejerol();
-    return true;
 }
 
 void convert_coord(int *elso, int *masodik) {
@@ -276,6 +288,17 @@ void reset_tartalom(mezo *honnan) {
     honnan->tartalom[2] = ']';
     honnan->tartalom[3] = '\0';
     honnan->foglalt = false;
+}
+
+void visszalepes_interact(int n) {
+    if (n > list_count()) {
+        printf("Nem lehetseges ennyit visszalepni!\n");
+        return;
+    }
+    while (n > 0) {
+        visszalepes_f();
+        n--;
+    }
 }
 
 void m_cleanup() {
