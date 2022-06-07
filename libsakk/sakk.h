@@ -40,15 +40,21 @@ void list_torol_elejerol();
 
 void jatekos_beker();
 
+void jatekos_lepes();
+
 void tabla_kiir();
 
 void tabla_inicializal();
 
 void tabla_feltolt();
 
-bool jatek_elment(char *filenev, bool jatekos);
+bool jatek_elment(char *filenev);
 
 bool jatek_betolt(char *filenev);
+
+void tabla_test_print();
+
+void input_test();
 
 void convert_coord(int *elso, int *masodik);
 
@@ -69,17 +75,5 @@ int reverse_coord_o(int *coord);
 int list_count();
 
 void visszalepes_interact(int n);
-
-bool lepes_interact(int *honnan_s, int *honnan_o, int *hova_s, int *hova_o);
-
-bool atvaltozas(jatekos j);
-
-bool atvaltozas_f(jatekos j, char *milyen_karakter);
-
-bool sancolas(jatekos j);
-
-bool sancolas_f(jatekos j);
-
-jatekos get_jatekos(bool feher);
 
 #endif //SAKK_H
