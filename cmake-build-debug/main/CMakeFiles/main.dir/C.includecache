@@ -13,6 +13,8 @@ stdio.h
 -
 stdbool.h
 -
+stdlib.h
+-
 sakk.h
 E:/ProgalapTGProjekt/main/sakk.h
 

@@ -36,14 +36,17 @@ int main() {
     list_hozzaad(&ketto);
     list_print();*/
 
+    /*jatekos j = get_jatekos(false);
+
+    tabla_kiir();
+    sancolas(j);
+    tabla_kiir();*/
+
     lepes_f();
     tabla_kiir();
-    lepes_f();
-    tabla_kiir();
-    list_print();
-    visszalepes_f();
-    tabla_kiir();
-    list_print();
+    char filename[] = "asd.txt";
+    jatek_elment(filename, false);
+
 
 
     m_cleanup();

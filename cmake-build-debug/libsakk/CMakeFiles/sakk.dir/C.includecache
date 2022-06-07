@@ -15,6 +15,10 @@ malloc.h
 -
 ctype.h
 -
+stdlib.h
+-
+string.h
+-
 sakk.h
 E:/ProgalapTGProjekt/libsakk/sakk.h
 
