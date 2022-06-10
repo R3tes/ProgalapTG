@@ -232,9 +232,32 @@ bool lepes_f(jatekos j) {
             return false;
         }
     }
-    // meg tobb ellenorzes
     switch (tabla[honnan_s][honnan_o].tartalom[1]) {
-
+        case 'G':
+        case 'g': if (gyalog_lepes(&honnan_s, &honnan_o, &hova_s, &hova_o, &tabla[honnan_s][honnan_o].tartalom[1])) break;
+        case 'B':
+        case 'b': {
+            //bastya lepes
+        }
+        case 'H':
+        case 'h': {
+            //huszar lepes
+        }
+        case 'F':
+        case 'f': {
+            //futo lepes
+        }
+        case 'V':
+        case 'v': {
+            //vezer lepes
+        }
+        case 'K':
+        case 'k': {
+            //kiraly lepes
+        }
+        default: {
+            printf ("Sikertelen lepes!\n"); return false;
+        }
     }
     tabla[hova_s][hova_o].tartalom[1] = tabla[honnan_s][honnan_o].tartalom[1];
     tabla[hova_s][hova_o].mezobabu = tabla[honnan_s][honnan_o].mezobabu;
@@ -243,6 +266,22 @@ bool lepes_f(jatekos j) {
     list_hozzaad(lepes_new);
     reset_tartalom(&tabla[honnan_s][honnan_o]);
     return true;
+}
+
+bool gyalog_lepes(int *honnan_s, int *honnan_o, int *hova_s, int *hova_o, char *szin) { // vagy utes
+    if (*szin == 'G') {
+        if (*hova_s >= *honnan_s) return false; //visszafele nem lephet
+        if (*hova_s < 0 || *hova_o < 0 || *hova_o > PALYAMERET-1) return false; //a palyarol nem lephet ki
+        if (!tabla[*hova_s][*hova_o].foglalt && *honnan_o == *hova_o && (*hova_s == *honnan_s - 1 || (*hova_s == *honnan_s - 2 && *honnan_s == 6))) return true;
+        //ugyanabban az oszlopban lep nem foglalt mezore egyet vagy kettot <= lepes
+        if (tabla[*hova_s][*hova_o].foglalt && *hova_s == (*honnan_s - 1) && (*hova_o == (*honnan_o - 1) || *hova_o == (*honnan_o + 1))) return true;
+        //utes csak foglalt mezore lehetseges, egy mezot lephet felfele jobbra vagy balra <= utes
+        return false;
+    }
+    else {
+
+    }
+    return false;
 }
 
 bool sancolas_f(jatekos j) {
