@@ -56,7 +56,7 @@ void convert_coord(int *elso, int *masodik);
 
 bool validate_coord(int *elso, int *masodik);
 
-bool lepes_f();
+bool lepes_f(jatekos j);
 
 void visszalepes_f();
 

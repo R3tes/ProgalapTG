@@ -44,8 +44,8 @@ int main() {
 
     lepes_f();
     tabla_kiir();
-    char filename[] = "asd.txt";
-    jatek_elment(filename, false);
+    //char filename[] = "asd.txt";
+    //jatek_elment(filename, false);
 
 
 

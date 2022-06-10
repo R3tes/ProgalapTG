@@ -149,8 +149,6 @@ bool jatek_elment(char *filenev, bool jatekos) {
 
     FILE *output = fopen(filenev, "w");
 
-    printf ("NA CSA\n");
-
     for (int i = 0; i < PALYAMERET; i++) {
         for (int j = 0; j < PALYAMERET; j++) {
             /* format: tartalom foglalt babu_tartalom babu_pos_i babu_pos_j babu_feher\n */
@@ -167,7 +165,6 @@ bool jatek_elment(char *filenev, bool jatekos) {
 
 bool jatek_betolt(char *filenev) {
 
-    int i;
     FILE *input;
 
     if (!(input = fopen(filenev, "r"))) {
@@ -195,7 +192,7 @@ bool jatek_betolt(char *filenev) {
 
 bool lepes_interact(int *honnan_s, int *honnan_o, int *hova_s, int *hova_o) {
     char tmp;
-    printf("\nMelyik babuval szeretne lepni / utni / sancolni? Sor, oszlop (pl. 6C/6c): ");
+    printf("\nMelyik babuval szeretne lepni / utni? Sor, oszlop (pl. 6C/6c): ");
     scanf("%d%c", honnan_s, &tmp);
     *honnan_o = toupper((int) tmp);
     getc(stdin);
@@ -206,7 +203,7 @@ bool lepes_interact(int *honnan_s, int *honnan_o, int *hova_s, int *hova_o) {
         return false;
     }
 
-    printf("\nHova szeretne lepni / utni / sancolni? Sor, oszlop: ");
+    printf("\nHova szeretne lepni / utni? Sor, oszlop: ");
     scanf("%d%c", hova_s, &tmp);
     *hova_o = toupper((int) tmp);
 
@@ -218,16 +215,27 @@ bool lepes_interact(int *honnan_s, int *honnan_o, int *hova_s, int *hova_o) {
         printf("Nem megfelelo koordinatak, sikertelen lepes!\n");
         return false;
     }
-    /*if (tabla[*hova_s][*hova_o].foglalt) {
-        printf("A mezo foglalt, csak utni lehet!\n");
-        return false;
-    }*/
     return true;
 }
 
-bool lepes_f() {
+bool lepes_f(jatekos j) {
     int honnan_s, honnan_o, hova_s, hova_o;
     if (!lepes_interact(&honnan_s, &honnan_o, &hova_s, &hova_o)) return false;
+    if (j.feher) {
+        if (!strlen(strchr("GBHFVK", tabla[honnan_s][honnan_o].tartalom[1]))) {
+            printf("Nem a sajat figurajaval lep!\n");
+            return false;
+        }
+    } else {
+        if (!strlen(strchr("gbhfvk", tabla[honnan_s][honnan_o].tartalom[1]))) {
+            printf("Nem a sajat figurajaval lep!\n");
+            return false;
+        }
+    }
+    // meg tobb ellenorzes
+    switch (tabla[honnan_s][honnan_o].tartalom[1]) {
+
+    }
     tabla[hova_s][hova_o].tartalom[1] = tabla[honnan_s][honnan_o].tartalom[1];
     tabla[hova_s][hova_o].mezobabu = tabla[honnan_s][honnan_o].mezobabu;
     tabla[hova_s][hova_o].foglalt = true;
@@ -276,7 +284,7 @@ bool sancolas(jatekos j) {
         if (tabla[7][4].tartalom[1] == 'K' && (tabla[7][0].tartalom[1] == 'B' || tabla[7][7].tartalom[1] == 'B') &&
             tabla[7][1].tartalom[1] == '_' && tabla[7][3].tartalom[1] == '_' &&
             tabla[7][5].tartalom[1] == '_' && tabla[7][2].tartalom[1] == '_' && tabla[7][6].tartalom[1] == '_') {
-            if (lepes_f()) {
+            if (lepes_f(j)) {
                 if(sancolas_f(j)) return true;
             }
             printf("A sancolas sikertelen!\n");
@@ -287,13 +295,15 @@ bool sancolas(jatekos j) {
         if (tabla[0][4].tartalom[1] == 'k' && (tabla[0][0].tartalom[1] == 'b' || tabla[0][7].tartalom[1] == 'b') &&
             tabla[0][1].tartalom[1] == '_' && tabla[0][3].tartalom[1] == '_' &&
             tabla[0][5].tartalom[1] == '_' && tabla[0][2].tartalom[1] == '_' && tabla[0][6].tartalom[1] == '_') {
-            if (lepes_f()) {
+            if (lepes_f(j)) {
                 if (sancolas_f(j)) return true;
             }
             printf("A sancolas sikertelen!\n");
             return false;
         }
     }
+
+    return true;
 }
 
 bool atvaltozas(jatekos j) {
@@ -339,18 +349,6 @@ bool atvaltozas_f(jatekos j, char *milyen_karakter) {
     return true;
 }
 
-//TODO: valaszra varni
-/*bool utes(){
-    int mivel_s, mivel_o, mit_s, mit_o;
-    if (!lepes_interact(&mivel_s, &mivel_o, &mit_s, &mit_o)) return false;
-
-    switch (tabla[mivel_s][mivel_o].tartalom[1]) {
-        case 'p':
-            break;
-        case '':
-            break;
-    }
-}*/
 
 void visszalepes_f() {
     if (head == NULL) {
