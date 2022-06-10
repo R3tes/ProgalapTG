@@ -85,5 +85,6 @@ bool sancolas_f(jatekos j);
 jatekos get_jatekos(bool feher); //remove dis
 
 bool gyalog_lepes(int *honnan_s, int *honnan_o, int *hova_s, int *hova_o, char *szin);
+bool bastya_lepes(int *honnan_s, int *honnan_o, int *hova_s, int *hova_o);
 
 #endif //SAKK_H

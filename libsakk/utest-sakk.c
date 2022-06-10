@@ -1,6 +1,6 @@
 #include "sakk.h"
 #include "utest-sakk.h"
-#include <CUnit/CUnit.h>
+/*#include <CUnit/CUnit.h>
 
 static void nem_tul_okos_teszt() {
     int a = 1;
@@ -18,4 +18,4 @@ void sakk_test_setup() {
 
 void sakk_test_teardown() {
     // torolni i guess
-}
+}*/

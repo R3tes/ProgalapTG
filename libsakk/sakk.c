@@ -226,18 +226,43 @@ bool lepes_f(jatekos j) {
             printf("Nem a sajat figurajaval lep!\n");
             return false;
         }
+        if (tabla[hova_s][hova_o].tartalom[1] == 'G' || tabla[hova_s][hova_o].tartalom[1] == 'B' ||
+            tabla[hova_s][hova_o].tartalom[1] == 'H' || tabla[hova_s][hova_o].tartalom[1] == 'F' ||
+            tabla[hova_s][hova_o].tartalom[1] == 'K' || tabla[hova_s][hova_o].tartalom[1] == 'V') {
+            printf("Nem lephetsz a sajat figuradra!\n");
+            return false;
+        }
     } else {
         if (!strlen(strchr("gbhfvk", tabla[honnan_s][honnan_o].tartalom[1]))) {
             printf("Nem a sajat figurajaval lep!\n");
             return false;
         }
+        if (tabla[hova_s][hova_o].tartalom[1] == 'g' || tabla[hova_s][hova_o].tartalom[1] == 'b' ||
+            tabla[hova_s][hova_o].tartalom[1] == 'h' || tabla[hova_s][hova_o].tartalom[1] == 'f' ||
+            tabla[hova_s][hova_o].tartalom[1] == 'k' || tabla[hova_s][hova_o].tartalom[1] == 'v') {
+            printf("Nem lephetsz a sajat figuradra!\n");
+            return false;
+        }
     }
+
     switch (tabla[honnan_s][honnan_o].tartalom[1]) {
         case 'G':
-        case 'g': if (gyalog_lepes(&honnan_s, &honnan_o, &hova_s, &hova_o, &tabla[honnan_s][honnan_o].tartalom[1])) break;
+        case 'g': {
+            if (gyalog_lepes(&honnan_s, &honnan_o, &hova_s, &hova_o, &tabla[honnan_s][honnan_o].tartalom[1])) {
+                break;
+            } else {
+                printf("Sikertelen lepes!\n");
+                return false;
+            }
+        }
         case 'B':
         case 'b': {
-            //bastya lepes
+            if (bastya_lepes(&honnan_s, &honnan_o, &hova_s, &hova_o)) {
+                break;
+            } else {
+                printf("Sikertelen lepes!\n");
+                return false;
+            }
         }
         case 'H':
         case 'h': {
@@ -256,7 +281,8 @@ bool lepes_f(jatekos j) {
             //kiraly lepes
         }
         default: {
-            printf ("Sikertelen lepes!\n"); return false;
+            printf("Sikertelen lepes!\n");
+            return false;
         }
     }
     tabla[hova_s][hova_o].tartalom[1] = tabla[honnan_s][honnan_o].tartalom[1];
@@ -268,18 +294,35 @@ bool lepes_f(jatekos j) {
     return true;
 }
 
+bool bastya_lepes(int *honnan_s, int *honnan_o, int *hova_s, int *hova_o) {
+
+    if ((*honnan_s == *hova_s) || (*honnan_o == *hova_o)) return true;
+
+    return false;
+}
+
 bool gyalog_lepes(int *honnan_s, int *honnan_o, int *hova_s, int *hova_o, char *szin) { // vagy utes
     if (*szin == 'G') {
         if (*hova_s >= *honnan_s) return false; //visszafele nem lephet
-        if (*hova_s < 0 || *hova_o < 0 || *hova_o > PALYAMERET-1) return false; //a palyarol nem lephet ki
-        if (!tabla[*hova_s][*hova_o].foglalt && *honnan_o == *hova_o && (*hova_s == *honnan_s - 1 || (*hova_s == *honnan_s - 2 && *honnan_s == 6))) return true;
+        if (!tabla[*hova_s][*hova_o].foglalt && *honnan_o == *hova_o &&
+            (*hova_s == *honnan_s - 1))
+            return true;
         //ugyanabban az oszlopban lep nem foglalt mezore egyet vagy kettot <= lepes
-        if (tabla[*hova_s][*hova_o].foglalt && *hova_s == (*honnan_s - 1) && (*hova_o == (*honnan_o - 1) || *hova_o == (*honnan_o + 1))) return true;
+        if (tabla[*hova_s][*hova_o].foglalt && *hova_s == (*honnan_s - 1) &&
+            (*hova_o == (*honnan_o - 1) || *hova_o == (*honnan_o + 1)))
+            return true;
         //utes csak foglalt mezore lehetseges, egy mezot lephet felfele jobbra vagy balra <= utes
         return false;
-    }
-    else {
-
+    } else {
+        if (*hova_s <= *honnan_s) {
+            return false;
+        } //visszafele nem lephet
+        if (!tabla[*hova_s][*hova_o].foglalt && *honnan_o == *hova_o &&
+            (*hova_s == *honnan_s + 1))
+            return true;
+        if (tabla[*hova_s][*hova_o].foglalt && *hova_s == (*honnan_s + 1) &&
+            (*hova_o == (*honnan_o - 1) || *hova_o == (*honnan_o + 1)))
+            return true;
     }
     return false;
 }
@@ -324,7 +367,7 @@ bool sancolas(jatekos j) {
             tabla[7][1].tartalom[1] == '_' && tabla[7][3].tartalom[1] == '_' &&
             tabla[7][5].tartalom[1] == '_' && tabla[7][2].tartalom[1] == '_' && tabla[7][6].tartalom[1] == '_') {
             if (lepes_f(j)) {
-                if(sancolas_f(j)) return true;
+                if (sancolas_f(j)) return true;
             }
             printf("A sancolas sikertelen!\n");
             return false;

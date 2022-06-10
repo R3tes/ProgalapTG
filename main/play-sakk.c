@@ -42,7 +42,7 @@ int main() {
     sancolas(j);
     tabla_kiir();*/
 
-    jatekos j = {true, "asd"};
+    jatekos j = {false, "asd"};
 
     lepes_f(j);
     tabla_kiir();
@@ -52,8 +52,6 @@ int main() {
     tabla_kiir();
     //char filename[] = "asd.txt";
     //jatek_elment(filename, false);
-
-
 
     m_cleanup();
 
