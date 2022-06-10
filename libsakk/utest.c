@@ -1,6 +1,6 @@
-#include <sakk.h>
-#include <utest-sakk.h>
-#include <utest-sakk.h>
+#include "sakk.h"
+#include "utest-sakk.h"
+#include "utest-sakk.h"
 #include <CUnit/Basic.h>
 #include <CUnit/CUnit.h>
 

@@ -1,5 +1,5 @@
-#include <sakk.h>
-#include <utest-sakk.h>
+#include "sakk.h"
+#include "utest-sakk.h"
 #include <CUnit/CUnit.h>
 
 static void nem_tul_okos_teszt() {

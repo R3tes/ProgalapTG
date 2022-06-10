@@ -1,6 +1,8 @@
 #ifndef SAKK_H
 #define SAKK_H
 
+#include <stdbool.h>
+
 #define PALYAMERET 8
 
 typedef struct {
