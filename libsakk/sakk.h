@@ -99,4 +99,6 @@ bool beolvas_int(int *szam);
 
 jatekos get_jatekos(bool feher);
 
+char *string_olvas();
+
 #endif //SAKK_H

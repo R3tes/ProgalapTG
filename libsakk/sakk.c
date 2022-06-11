@@ -10,12 +10,30 @@
 
 #define btoi(b) ((b) ? 1 : 0)
 
+//beolvasas
+#define BUFFER 32
+
 mezo tabla[PALYAMERET][PALYAMERET];
 jatekos j[2];
 
 csomopont_t *head = NULL;
 
 int kor = 0;
+
+char *string_olvas() {
+    char *str = malloc(sizeof(char) * BUFFER), *err;
+    int pos;
+    for (pos = 0; str != NULL && (str[pos] = getchar()) != '\n'; pos++) {
+        if (pos % BUFFER == BUFFER - 1) {
+            if ((err = realloc(str, sizeof(char) * (BUFFER + pos + 1))) == NULL)
+                free(str);
+            str = err;
+        }
+    }
+    if (str != NULL)
+        str[pos] = '\0';
+    return str;
+}
 
 void jatekos_beker() {
 
@@ -192,14 +210,16 @@ bool jatek_betolt(char *filenev) {
     fclose(input);
 
     return true;
-
 }
 
 bool lepes_interact(int *honnan_s, int *honnan_o, int *hova_s, int *hova_o) {
-    char tmp;
+    char *koordinataBeolvas;
+
     printf("\nMelyik babuval szeretne lepni / utni? Sor, oszlop (pl. 6C/6c): ");
-    scanf("%d%c", honnan_s, &tmp);
-    *honnan_o = toupper((int) tmp);
+    koordinataBeolvas = string_olvas();
+
+    *honnan_s = (int) koordinataBeolvas[0] - '0';
+    *honnan_o = toupper((int) koordinataBeolvas[1]);
 
     convert_coord(honnan_s, honnan_o);
 
@@ -209,12 +229,14 @@ bool lepes_interact(int *honnan_s, int *honnan_o, int *hova_s, int *hova_o) {
     }
 
     printf("\nHova szeretne lepni / utni? Sor, oszlop: ");
-    scanf("%d%c", hova_s, &tmp);
-    *hova_o = toupper((int) tmp);
+    koordinataBeolvas = string_olvas();
 
-    printf("\n");
+    *hova_s = (int) koordinataBeolvas[0] - '0';
+    *hova_o = toupper((int) koordinataBeolvas[1]);
 
     convert_coord(hova_s, hova_o);
+
+    printf("\n");
 
     if (!validate_coord(honnan_s, honnan_o) || !validate_coord(hova_s, hova_o)) {
         printf("Nem megfelelo koordinatak, sikertelen lepes!\n");
@@ -508,18 +530,19 @@ bool atvaltozas(jatekos j) {
 }
 
 bool atvaltozas_f(jatekos j, char *milyen_karakter) {
-    char tmp;
+    char *tmp;
     printf("Mive szeretne atvaltozni? [V]ezer, [B]astya, [F]uto, [H]uszar: ");
     fflush(stdin);
-    scanf("%c", &tmp);
-    if (!strlen(strchr("vbfhVBFH", tmp))) {
+    tmp = string_olvas();
+
+    if (!strlen(strchr("vbfhVBFH", tmp[0]))) {
         printf("Helytelen opcio!\n");
         return false;
     }
     if (j.feher) {
-        *milyen_karakter = (char) toupper((int) tmp);
+        *milyen_karakter = (char) toupper((int) tmp[0]);
     } else {
-        *milyen_karakter = (char) tolower((int) tmp);
+        *milyen_karakter = (char) tolower((int) tmp[0]);
     }
     return true;
 }
@@ -579,7 +602,8 @@ int list_count() {
 bool visszalepes_interact() {
     int n;
     printf("Hanyat szeretne visszalepni: ");
-    scanf("%d", &n);
+    n = (int) string_olvas() - '0';
+
     if (n > list_count()) {
         printf("Nem lehetseges ennyit visszalepni!\n");
         return false;

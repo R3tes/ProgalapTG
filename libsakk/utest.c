@@ -1,7 +1,7 @@
 #include "sakk.h"
 #include "utest-sakk.h"
 #include "utest-sakk.h"
-/*#include <CUnit/Basic.h>
+#include <CUnit/Basic.h>
 #include <CUnit/CUnit.h>
 
 CU_SuiteInfo sakk_suites[] = {
@@ -20,4 +20,4 @@ int main() {
     CU_basic_run_tests();
     CU_cleanup_registry();
     return 0; 
-}*/
+}
