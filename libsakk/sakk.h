@@ -14,11 +14,12 @@ typedef struct {
     char tartalom[4];
     bool foglalt;
     babu mezobabu;
+    int ertek; //huszar lehetseges lepesei
 } mezo;
 
 typedef struct {
     bool feher;
-    char *nev;
+    char nev[51];
 } jatekos;
 
 typedef struct lepes {
@@ -48,7 +49,7 @@ void tabla_inicializal();
 
 void tabla_feltolt();
 
-bool jatek_elment(char *filenev, bool jatekos);
+bool jatek_elment(char *filenev);
 
 bool jatek_betolt(char *filenev);
 
@@ -70,7 +71,7 @@ int reverse_coord_o(int *coord);
 
 int list_count();
 
-void visszalepes_interact(int n);
+bool visszalepes_interact();
 
 bool lepes_interact(int *honnan_s, int *honnan_o, int *hova_s, int *hova_o);
 
@@ -82,9 +83,20 @@ bool sancolas(jatekos j);
 
 bool sancolas_f(jatekos j);
 
-jatekos get_jatekos(bool feher); //remove dis
-
 bool gyalog_lepes(int *honnan_s, int *honnan_o, int *hova_s, int *hova_o, char *szin);
+
 bool bastya_lepes(int *honnan_s, int *honnan_o, int *hova_s, int *hova_o);
+
+bool huszar_lepes(int *honnan_s, int *honnan_o, int *hova_s, int *hova_o);
+
+bool futo_lepes(int *honnan_s, int *honnan_o, int *hova_s, int *hova_o);
+
+bool kiraly_lepes(int *honnan_s, int *honnan_o, int *hova_s, int *hova_o);
+
+bool nyert_e_valaki();
+
+bool beolvas_int(int *szam);
+
+jatekos get_jatekos(bool feher);
 
 #endif //SAKK_H

@@ -5,6 +5,8 @@
 #include <stdlib.h>
 #include <string.h>
 #include "sakk.h"
+#include "errno.h"
+#include "limits.h"
 
 #define btoi(b) ((b) ? 1 : 0)
 
@@ -20,14 +22,14 @@ void jatekos_beker() {
     char *szin = "vilagos";
 
     for (int i = 0; i < 2; i++) {
-        j[i].nev = (char *) malloc(50 * sizeof(char *));
 
         if (i > 0) {
             szin = "sotet";
         }
 
         printf("Adja meg a %s jatekos nevet:\n", szin);
-        scanf("%s", j[i].nev);
+        fgets(j[i].nev, 50, stdin);
+        j[i].nev[strlen(j[i].nev) - 1] = '\0';
 
         if (i < 1) {
             j[i].feher = true;
@@ -72,37 +74,34 @@ void list_torol_elejerol() {
 
 void tabla_inicializal() {
     for (int i = 0; i < PALYAMERET; i++) {
-        for (int j = 0; j < PALYAMERET; j++) {
-            tabla[i][j].tartalom[0] = '[';
-            tabla[i][j].tartalom[1] = '_';
-            tabla[i][j].tartalom[2] = ']';
-            tabla[i][j].tartalom[3] = '\0';
+        for (int k = 0; k < PALYAMERET; k++) {
+            tabla[i][k].tartalom[0] = '[';
+            tabla[i][k].tartalom[1] = '_';
+            tabla[i][k].tartalom[2] = ']';
+            tabla[i][k].tartalom[3] = '\0';
         }
     }
 }
 
 void tabla_kiir() {
     printf("   ");
-    for (char i = 'A'; i < 'A' + PALYAMERET; i++) {
-        printf(" %c ", i);
+    for (int i = 'A'; i < 'A' + PALYAMERET; i++) {
+        printf(" %c ", (char) i);
     }
     printf("\n");
 
     int sorszam = 8;
     for (int i = 0; i < PALYAMERET; i++) {
-        for (int j = 0; j < PALYAMERET + 1; j++) {
-            if (j == 0) {
+        for (int k = 0; k < PALYAMERET + 1; k++) {
+            if (k == 0) {
                 printf(" %d ", sorszam);
                 sorszam--;
             } else {
-                printf("%s", tabla[i][j - 1].tartalom);
+                printf("%s", tabla[i][k - 1].tartalom);
             }
         }
         printf("\n");
     }
-
-    printf("\nA vilagos jatekos neve: %s %d\n", j[0].nev, btoi(j[0].feher));
-    printf("A sotet jatekos neve: %s %d\n", j[1].nev, btoi(j[1].feher));
 }
 
 void tabla_feltolt() {
@@ -145,7 +144,7 @@ void tabla_feltolt() {
 
 }
 
-bool jatek_elment(char *filenev, bool jatekos) {
+bool jatek_elment(char *filenev) {
 
     FILE *output = fopen(filenev, "w");
 
@@ -157,6 +156,8 @@ bool jatek_elment(char *filenev, bool jatekos) {
                     tabla[i][j].mezobabu.tartalom, btoi(tabla[i][j].mezobabu.feher));
         }
     }
+
+    fprintf(output, "%s\n%s\n", j[0].nev, j[1].nev);
 
     fclose(output);
 
@@ -174,7 +175,6 @@ bool jatek_betolt(char *filenev) {
     j[0].feher = true;
     j[1].feher = false;
 
-
     for (int i = 0; i < PALYAMERET; i++) {
         for (int j = 0; j < PALYAMERET; j++) {
             int tmp1, tmp2;
@@ -186,6 +186,11 @@ bool jatek_betolt(char *filenev) {
         }
     }
 
+    fgets(j[0].nev, 50, input);
+    fgets(j[1].nev, 50, input);
+
+    fclose(input);
+
     return true;
 
 }
@@ -195,7 +200,7 @@ bool lepes_interact(int *honnan_s, int *honnan_o, int *hova_s, int *hova_o) {
     printf("\nMelyik babuval szeretne lepni / utni? Sor, oszlop (pl. 6C/6c): ");
     scanf("%d%c", honnan_s, &tmp);
     *honnan_o = toupper((int) tmp);
-    getc(stdin);
+
     convert_coord(honnan_s, honnan_o);
 
     if (tabla[*honnan_s][*honnan_o].tartalom[1] == '_') {
@@ -222,7 +227,9 @@ bool lepes_f(jatekos j) {
     int honnan_s, honnan_o, hova_s, hova_o;
     if (!lepes_interact(&honnan_s, &honnan_o, &hova_s, &hova_o)) return false;
     if (j.feher) {
-        if (!strlen(strchr("GBHFVK", tabla[honnan_s][honnan_o].tartalom[1]))) {
+        if (tabla[honnan_s][honnan_o].tartalom[1] == 'g' || tabla[honnan_s][honnan_o].tartalom[1] == 'b' ||
+            tabla[honnan_s][honnan_o].tartalom[1] == 'h' || tabla[honnan_s][honnan_o].tartalom[1] == 'f' ||
+            tabla[honnan_s][honnan_o].tartalom[1] == 'k' || tabla[honnan_s][honnan_o].tartalom[1] == 'v') {
             printf("Nem a sajat figurajaval lep!\n");
             return false;
         }
@@ -233,7 +240,9 @@ bool lepes_f(jatekos j) {
             return false;
         }
     } else {
-        if (!strlen(strchr("gbhfvk", tabla[honnan_s][honnan_o].tartalom[1]))) {
+        if (tabla[honnan_s][honnan_o].tartalom[1] == 'G' || tabla[honnan_s][honnan_o].tartalom[1] == 'B' ||
+            tabla[honnan_s][honnan_o].tartalom[1] == 'H' || tabla[honnan_s][honnan_o].tartalom[1] == 'F' ||
+            tabla[honnan_s][honnan_o].tartalom[1] == 'K' || tabla[honnan_s][honnan_o].tartalom[1] == 'V') {
             printf("Nem a sajat figurajaval lep!\n");
             return false;
         }
@@ -266,19 +275,40 @@ bool lepes_f(jatekos j) {
         }
         case 'H':
         case 'h': {
-            //huszar lepes
+            if (huszar_lepes(&honnan_s, &honnan_o, &hova_s, &hova_o)) {
+                break;
+            } else {
+                printf("Sikertelen lepes!\n");
+                return false;
+            }
         }
         case 'F':
         case 'f': {
-            //futo lepes
+            if (futo_lepes(&honnan_s, &honnan_o, &hova_s, &hova_o)) {
+                break;
+            } else {
+                printf("Sikertelen lepes!\n");
+                return false;
+            }
         }
         case 'V':
         case 'v': {
-            //vezer lepes
+            if (futo_lepes(&honnan_s, &honnan_o, &hova_s, &hova_o) ||
+                bastya_lepes(&honnan_s, &honnan_o, &hova_s, &hova_o)) {
+                break;
+            } else {
+                printf("Sikertelen lepes!\n");
+                return false;
+            }
         }
         case 'K':
         case 'k': {
-            //kiraly lepes
+            if (kiraly_lepes(&honnan_s, &honnan_o, &hova_s, &hova_o)) {
+                break;
+            } else {
+                printf("Sikertelen lepes!\n");
+                return false;
+            }
         }
         default: {
             printf("Sikertelen lepes!\n");
@@ -297,6 +327,44 @@ bool lepes_f(jatekos j) {
 bool bastya_lepes(int *honnan_s, int *honnan_o, int *hova_s, int *hova_o) {
 
     if ((*honnan_s == *hova_s) || (*honnan_o == *hova_o)) return true;
+
+    return false;
+}
+
+bool huszar_lepes(int *honnan_s, int *honnan_o, int *hova_s, int *hova_o) {
+    if ((*hova_s == (*honnan_s - 2) || *hova_s == (*honnan_s + 2)) &&
+        (*hova_o == (*honnan_o - 1) || *hova_o == (*honnan_o + 1)))
+        return true;
+    if ((*hova_o == (*honnan_o - 2) || *hova_o == (*honnan_o + 2)) &&
+        (*hova_s == (*honnan_s + 1) || *hova_s == (*honnan_s - 1)))
+        return true;
+    return false;
+}
+
+bool kiraly_lepes(int *honnan_s, int *honnan_o, int *hova_s, int *hova_o) {
+    for (int i = *honnan_s - 1; i <= *honnan_s + 1; i++) {
+        for (int j = *honnan_o - 1; j <= *honnan_o + 1; j++) {
+            if (*hova_s == i && *hova_o == j) return true;
+        }
+    }
+    return false;
+}
+
+bool futo_lepes(int *honnan_s, int *honnan_o, int *hova_s, int *hova_o) {
+
+    for (int i = 0; i < 8; i++) {
+        for (int j = 0; j < 8; j++) {
+            if ((i - *honnan_s == j - *honnan_o) || (i - *honnan_s == -(j - *honnan_o))) {
+                tabla[i][j].ertek = 1;
+            } else {
+                tabla[i][j].ertek = 0;
+            }
+        }
+    }
+
+    if (tabla[*hova_s][*hova_o].ertek == 1) {
+        return true;
+    }
 
     return false;
 }
@@ -384,8 +452,29 @@ bool sancolas(jatekos j) {
             return false;
         }
     }
+    printf("A sancolas sikertelen!\n");
+    return false;
+}
 
-    return true;
+bool nyert_e_valaki() {
+    bool feher_k, feher_v, fekete_k, fekete_v;
+    for (int i = 0; i < PALYAMERET; i++) {
+        for (int j = 0; j < PALYAMERET; j++) {
+            if (tabla[i][j].tartalom[1] == 'k') feher_k = true;
+            if (tabla[i][j].tartalom[1] == 'v') feher_v = true;
+            if (tabla[i][j].tartalom[1] == 'K') fekete_k = true;
+            if (tabla[i][j].tartalom[1] == 'V') fekete_v = true;
+        }
+    }
+    if (!feher_k && !feher_v) {
+        printf("\n\nA jatekot %s nyerte!\n\n", j[1].nev);
+        return true;
+    }
+    if (!fekete_k && !fekete_v) {
+        printf("\n\nA jatekot %s nyerte!\n\n", j[0].nev);
+        return true;
+    }
+    return false;
 }
 
 bool atvaltozas(jatekos j) {
@@ -397,6 +486,7 @@ bool atvaltozas(jatekos j) {
                     tabla[0][i].tartalom[1] = milyen_karakter;
                     return true;
                 }
+                printf("Nem tud meg atvaltozni!\n");
                 return false;
             }
         } else {
@@ -406,18 +496,21 @@ bool atvaltozas(jatekos j) {
                         tabla[PALYAMERET - 1][i].tartalom[1] = milyen_karakter;
                         return true;
                     }
+                    printf("Nem tud meg atvaltozni!\n");
                     return false;
                 }
             }
         }
     }
+
+    printf("Nem tud meg atvaltozni!\n");
     return false;
 }
 
 bool atvaltozas_f(jatekos j, char *milyen_karakter) {
     char tmp;
     printf("Mive szeretne atvaltozni? [V]ezer, [B]astya, [F]uto, [H]uszar: ");
-    fflush(stdin); //TODO nem biztos h kell
+    fflush(stdin);
     scanf("%c", &tmp);
     if (!strlen(strchr("vbfhVBFH", tmp))) {
         printf("Helytelen opcio!\n");
@@ -483,15 +576,33 @@ int list_count() {
     return res;
 }
 
-void visszalepes_interact(int n) {
+bool visszalepes_interact() {
+    int n;
+    printf("Hanyat szeretne visszalepni: ");
+    scanf("%d", &n);
     if (n > list_count()) {
         printf("Nem lehetseges ennyit visszalepni!\n");
-        return;
+        return false;
     }
     while (n > 0) {
         visszalepes_f();
         n--;
     }
+    return true;
+}
+
+bool beolvas_int(int *szam) {
+    fflush(stdin);
+    long tmp;
+    char buf[512];
+    if (!fgets(buf, 512, stdin)) return false;
+    char *end;
+    errno = 0;
+    tmp = strtol(buf, &end, 10);
+    if (errno == ERANGE || end == buf || (*end && *end != '\n')) return false;
+    if (tmp < INT_MIN || tmp > INT_MAX) return false;
+    *szam = (int) tmp;
+    return true;
 }
 
 jatekos get_jatekos(bool feher) {
@@ -502,6 +613,4 @@ void m_cleanup() {
     while (list_count()) {
         list_torol_elejerol();
     }
-    free(j[0].nev);
-    free(j[1].nev);
 }
