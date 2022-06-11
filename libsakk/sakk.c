@@ -10,7 +10,6 @@
 
 #define btoi(b) ((b) ? 1 : 0)
 
-//beolvasas
 #define BUFFER 32
 
 mezo tabla[PALYAMERET][PALYAMERET];
