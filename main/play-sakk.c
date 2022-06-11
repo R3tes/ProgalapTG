@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <stdbool.h>
+#include <string.h>
 #include "sakk.h"
 
 int main() {
@@ -28,9 +29,10 @@ int main() {
                     char filename_user[50];
                     printf("Fajlnev, amibol betoltheto a jatek: ");
                     fgets(filename_user, 50, stdin);
+                    filename_user[strlen(filename_user) - 1] = '\0';
                     if (jatek_betolt(filename_user)) {
                         printf("Sikeres fajlolvasas!\n");
-
+                        tabla_kiir();
                         sikeres = true;
                         break;
                     }
@@ -71,6 +73,7 @@ int main() {
                                     char filename_save[50];
                                     printf("Fajlnev, amibe elmentheto a jatek: ");
                                     fgets(filename_save, 50, stdin);
+                                    filename_save[strlen(filename_save) - 1] = '\0';
                                     if (jatek_elment(filename_save)) {
                                         printf("Sikeres mentes!\n");
                                         feher_sikeres = true;
@@ -145,6 +148,7 @@ int main() {
                                     char filename_save[50];
                                     printf("Fajlnev, amibe elmentheto a jatek: ");
                                     fgets(filename_save, 50, stdin);
+                                    filename_save[strlen(filename_save) - 1] = '\0';
                                     if (jatek_elment(filename_save)) {
                                         printf("Sikeres mentes!\n");
                                         fekete_sikeres = true;

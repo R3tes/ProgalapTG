@@ -167,10 +167,8 @@ bool jatek_elment(char *filenev) {
 
     for (int i = 0; i < PALYAMERET; i++) {
         for (int j = 0; j < PALYAMERET; j++) {
-            /* format: tartalom foglalt babu_tartalom babu_pos_i babu_pos_j babu_feher\n */
-            fprintf(output, "%c%c%c%c%d%c%d\n", tabla[i][j].tartalom[0], tabla[i][j].tartalom[1],
-                    tabla[i][j].tartalom[2], tabla[i][j].tartalom[3], tabla[i][j].foglalt,
-                    tabla[i][j].mezobabu.tartalom, btoi(tabla[i][j].mezobabu.feher));
+            fprintf(output, "%c%c%c%c%d\n", tabla[i][j].tartalom[0], tabla[i][j].tartalom[1],
+                    tabla[i][j].tartalom[2], tabla[i][j].tartalom[3], btoi(tabla[i][j].foglalt));
         }
     }
 
@@ -183,6 +181,8 @@ bool jatek_elment(char *filenev) {
 
 bool jatek_betolt(char *filenev) {
 
+    tabla_inicializal();
+
     FILE *input;
 
     if (!(input = fopen(filenev, "r"))) {
@@ -194,17 +194,18 @@ bool jatek_betolt(char *filenev) {
 
     for (int i = 0; i < PALYAMERET; i++) {
         for (int j = 0; j < PALYAMERET; j++) {
-            int tmp1, tmp2;
-            fscanf(input, "%c%c%c%c%d%c%d*", &tabla[i][j].tartalom[0], &tabla[i][j].tartalom[1],
-                   &tabla[i][j].tartalom[2], &tabla[i][j].tartalom[3], &tmp1,
-                   &tabla[i][j].mezobabu.tartalom, &tmp2);
+            int tmp1;
+            fscanf(input, "%c%c%c%c%d", &tabla[i][j].tartalom[0], &tabla[i][j].tartalom[1],
+                   &tabla[i][j].tartalom[2], &tabla[i][j].tartalom[3], &tmp1);
             tabla[i][j].foglalt = tmp1;
-            tabla[i][j].mezobabu.feher = tmp2;
+            fgetc(input);
         }
     }
 
     fgets(j[0].nev, 50, input);
+    j[0].nev[strlen(j[0].nev) - 1] = '\0';
     fgets(j[1].nev, 50, input);
+    j[1].nev[strlen(j[1].nev) - 1] = '\0';
 
     fclose(input);
 
@@ -601,7 +602,8 @@ int list_count() {
 bool visszalepes_interact() {
     int n;
     printf("Hanyat szeretne visszalepni: ");
-    n = (int) string_olvas() - '0';
+    char *tmp = string_olvas();
+    n = (int) tmp[0] - '0';
 
     if (n > list_count()) {
         printf("Nem lehetseges ennyit visszalepni!\n");
