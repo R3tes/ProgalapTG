@@ -6,6 +6,7 @@ int main() {
 
     int option = 0;
     printf("Udvozlunk a sakk jatekprogramunkban!\n");
+    printf (" #####     #    #    # #    # \n#     #   # #   #   #  #   #  \n#        #   #  #  #   #  #   \n #####  #     # ###    ###    \n      # ####### #  #   #  #   \n#     # #     # #   #  #   #  \n #####  #     # #    # #    # \n                              \n");
 
     while (option != 3) {
 
