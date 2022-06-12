@@ -419,13 +419,21 @@ bool gyalog_lepes(int *honnan_s, int *honnan_o, int *hova_s, int *hova_o, char *
 
 bool sancolas_f(jatekos j) {
     if (j.feher) {
-        if (tabla[7][2].tartalom[1] == 'K') {
+        if (tabla[7][3].tartalom[1] == 'K') {
+            tabla[7][2].tartalom[1] = 'K';
+            tabla[7][2].mezobabu = tabla[7][3].mezobabu;
+            tabla[7][2].foglalt = true;
+            reset_tartalom(&tabla[7][3]);
             tabla[7][3].tartalom[1] = 'B';
             tabla[7][3].mezobabu = tabla[7][0].mezobabu;
             tabla[7][3].foglalt = true;
             reset_tartalom(&tabla[7][0]);
             return true;
-        } else if (tabla[7][6].tartalom[1] == 'K') {
+        } else if (tabla[7][5].tartalom[1] == 'K') {
+            tabla[7][6].tartalom[1] = 'K';
+            tabla[7][6].mezobabu = tabla[7][5].mezobabu;
+            tabla[7][6].foglalt = true;
+            reset_tartalom(&tabla[7][5]);
             tabla[7][5].tartalom[1] = 'B';
             tabla[7][5].mezobabu = tabla[7][7].mezobabu;
             tabla[7][5].foglalt = true;
@@ -433,13 +441,21 @@ bool sancolas_f(jatekos j) {
             return true;
         }
     } else {
-        if (tabla[0][2].tartalom[1] == 'k') {
+        if (tabla[0][3].tartalom[1] == 'k') {
+            tabla[0][2].tartalom[1] = 'k';
+            tabla[0][2].mezobabu = tabla[0][3].mezobabu;
+            tabla[0][2].foglalt = true;
+            reset_tartalom(&tabla[0][3]);
             tabla[0][3].tartalom[1] = 'b';
             tabla[0][3].mezobabu = tabla[0][0].mezobabu;
             tabla[0][3].foglalt = true;
             reset_tartalom(&tabla[0][0]);
             return true;
-        } else if (tabla[7][6].tartalom[1] == 'k') {
+        } else if (tabla[0][5].tartalom[1] == 'k') {
+            tabla[0][6].tartalom[1] = 'k';
+            tabla[0][6].mezobabu = tabla[0][5].mezobabu;
+            tabla[0][6].foglalt = true;
+            reset_tartalom(&tabla[0][5]);
             tabla[0][5].tartalom[1] = 'b';
             tabla[0][5].mezobabu = tabla[0][7].mezobabu;
             tabla[0][5].foglalt = true;
@@ -453,9 +469,8 @@ bool sancolas_f(jatekos j) {
 bool sancolas(jatekos j) {
 
     if (j.feher) {
-        if (tabla[7][4].tartalom[1] == 'K' && (tabla[7][0].tartalom[1] == 'B' || tabla[7][7].tartalom[1] == 'B') &&
-            tabla[7][1].tartalom[1] == '_' && tabla[7][3].tartalom[1] == '_' &&
-            tabla[7][5].tartalom[1] == '_' && tabla[7][2].tartalom[1] == '_' && tabla[7][6].tartalom[1] == '_') {
+        if (tabla[7][4].tartalom[1] == 'K' && ((tabla[7][0].tartalom[1] == 'B' && tabla[7][1].tartalom[1] == '_' && tabla[7][3].tartalom[1] == '_' && tabla[7][2].tartalom[1] == '_')
+        || (tabla[7][7].tartalom[1] == 'B' && tabla[7][5].tartalom[1] == '_' && tabla[7][6].tartalom[1] == '_'))) {
             if (lepes_f(j)) {
                 if (sancolas_f(j)) return true;
             }
@@ -464,9 +479,9 @@ bool sancolas(jatekos j) {
         }
 
     } else {
-        if (tabla[0][4].tartalom[1] == 'k' && (tabla[0][0].tartalom[1] == 'b' || tabla[0][7].tartalom[1] == 'b') &&
-            tabla[0][1].tartalom[1] == '_' && tabla[0][3].tartalom[1] == '_' &&
-            tabla[0][5].tartalom[1] == '_' && tabla[0][2].tartalom[1] == '_' && tabla[0][6].tartalom[1] == '_') {
+        if (tabla[0][4].tartalom[1] == 'k' &&
+            ((tabla[0][0].tartalom[1] == 'b' && tabla[0][1].tartalom[1] == '_' && tabla[0][3].tartalom[1] == '_' && tabla[0][2].tartalom[1] == '_')
+             || (tabla[0][7].tartalom[1] == 'b' && tabla[0][5].tartalom[1] == '_' && tabla[0][6].tartalom[1] == '_'))) {
             if (lepes_f(j)) {
                 if (sancolas_f(j)) return true;
             }
@@ -632,6 +647,17 @@ bool beolvas_int(int *szam) {
 
 jatekos get_jatekos(bool feher) {
     return (feher) ? j[0] : j[1];
+}
+
+mezo *get_mezo(int s, int o) {
+    return &tabla[s][o];
+}
+
+void lepes_teszteleshez(int honnan_s, int honnan_o, int hova_s, int hova_o) {
+    tabla[hova_s][hova_o].tartalom[1] = tabla[honnan_s][honnan_o].tartalom[1];
+    tabla[hova_s][hova_o].mezobabu = tabla[honnan_s][honnan_o].mezobabu;
+    tabla[hova_s][hova_o].foglalt = true;
+    reset_tartalom(&tabla[honnan_s][honnan_o]);
 }
 
 void m_cleanup() {

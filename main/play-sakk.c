@@ -77,6 +77,7 @@ int main() {
                                     if (jatek_elment(filename_save)) {
                                         printf("Sikeres mentes!\n");
                                         feher_sikeres = true;
+                                        m_cleanup();
                                         return 0;
                                     } else {
                                         printf("Nem sikerult elmenteni a jatekot!\n");
@@ -152,6 +153,7 @@ int main() {
                                     if (jatek_elment(filename_save)) {
                                         printf("Sikeres mentes!\n");
                                         fekete_sikeres = true;
+                                        m_cleanup();
                                         return 0;
                                     } else {
                                         printf("Nem sikerult elmenteni a jatekot!\n");
