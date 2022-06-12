@@ -220,6 +220,7 @@ bool lepes_interact(int *honnan_s, int *honnan_o, int *hova_s, int *hova_o) {
 
     *honnan_s = (int) koordinataBeolvas[0] - '0';
     *honnan_o = toupper((int) koordinataBeolvas[1]);
+    free(koordinataBeolvas);
 
     convert_coord(honnan_s, honnan_o);
 
@@ -233,7 +234,7 @@ bool lepes_interact(int *honnan_s, int *honnan_o, int *hova_s, int *hova_o) {
 
     *hova_s = (int) koordinataBeolvas[0] - '0';
     *hova_o = toupper((int) koordinataBeolvas[1]);
-
+    free(koordinataBeolvas);
     convert_coord(hova_s, hova_o);
 
     printf("\n");
@@ -552,6 +553,7 @@ bool atvaltozas_f(jatekos j, char *milyen_karakter) {
 
     if (!strlen(strchr("vbfhVBFH", tmp[0]))) {
         printf("Helytelen opcio!\n");
+        free(tmp);
         return false;
     }
     if (j.feher) {
@@ -559,6 +561,7 @@ bool atvaltozas_f(jatekos j, char *milyen_karakter) {
     } else {
         *milyen_karakter = (char) tolower((int) tmp[0]);
     }
+    free(tmp);
     return true;
 }
 
@@ -619,6 +622,7 @@ bool visszalepes_interact() {
     printf("Hanyat szeretne visszalepni: ");
     char *tmp = string_olvas();
     n = (int) tmp[0] - '0';
+    free(tmp);
 
     if (n > list_count()) {
         printf("Nem lehetseges ennyit visszalepni!\n");

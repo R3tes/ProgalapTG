@@ -92,17 +92,22 @@ static void test_beolvas_string() {
 
     char *szoveg = string_olvas();
     CU_ASSERT_EQUAL(szoveg[0], 'a');
+    free(szoveg);
     szoveg = string_olvas();
     CU_ASSERT_TRUE(strcmp(szoveg, "12") == 0);
     CU_ASSERT_FALSE(strcmp(szoveg, "4234234") == 0);
+    free(szoveg);
     szoveg = string_olvas();
     CU_ASSERT_EQUAL(szoveg[0], '\0');
+    free(szoveg);
     szoveg = string_olvas();
     CU_ASSERT_TRUE(strcmp(szoveg, "egyszer volt hol nem volt volt egyszer egy teszteles") == 0);
     CU_ASSERT_FALSE(strcmp(szoveg, "fdasfdsf ddsfdasdfr") == 0);
+    free(szoveg);
     szoveg = string_olvas();
     CU_ASSERT_TRUE(strcmp(szoveg, "szoveg 12") == 0);
     CU_ASSERT_FALSE(strcmp(szoveg, "12 szoveg") == 0);
+    free(szoveg);
 
     freopen("/dev/stdin", "r", stdin);
 }
