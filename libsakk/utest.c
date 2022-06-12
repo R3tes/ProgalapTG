@@ -1,3 +1,7 @@
+/*
+ * Progalap kotprog
+ * Keszitette: Bakk Abel, Bucsu Aron
+ */
 #include "sakk.h"
 #include "utest-sakk.h"
 #include "utest-sakk.h"
@@ -9,6 +13,7 @@ CU_SuiteInfo sakk_suites[] = {
     CU_SUITE_INFO_NULL
 };
 
+//Gyakorlati anyagbol heavily inspired Bakk Abel
 int main() {
     if (CU_initialize_registry() != CUE_SUCCESS) {
         return -1;

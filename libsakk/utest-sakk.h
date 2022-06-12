@@ -1,3 +1,7 @@
+/*
+ * Progalap kotprog
+ * Keszitette: Bakk Abel, Bucsu Aron
+ */
 #ifndef UTEST_TYPE_H
 #define UTEST_TYPE_H
 

@@ -1,7 +1,15 @@
+/*
+ * Progalap kotprog
+ * Keszitette: Bakk Abel, Bucsu Aron
+ */
 #include <stdio.h>
 #include <stdbool.h>
 #include <string.h>
 #include "sakk.h"
+
+/*
+ * Main elkeszitesi aranya: kezdetben felosztottuk magunk kozott 50-50%-ra
+ */
 
 int main() {
 
